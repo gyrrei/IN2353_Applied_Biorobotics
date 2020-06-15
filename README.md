@@ -1,5 +1,5 @@
 # Applied Biorobotics @TUM IN2353
-Held by Prof. Daniel Renjewski 
+Held by Prof. Daniel Renjewski. 
 8 credits course for ~20 students using flipped classrooms. Weekly assignments incl. neuro-controller of a robot, particle swarm optimisation, poster on bipedal walkers and 15min video about snake robots.
 
 ## Assignments
