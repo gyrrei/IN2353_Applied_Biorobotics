@@ -1,0 +1,978 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <title>Gyri Reiersen - Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/export/style/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/export/style/print.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/views.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/tinymce.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/style-blessed1.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/select2.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/cookieconsent.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/mahara-tum/static/style/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/mahara-tum/static/style/style-blessed1.css">
+
+    </head>
+    <body>
+        <div id="mahara-logo">
+            <a href="https://mahara.org/"><img src="../../../static/theme/mahara-tum/static/images/site-logo.png" alt="Mahara export"></a>
+        </div>
+        <h1><a href="../../../index.html">Assignments</a></h1>
+        <div id="content">
+            <div id="breadcrumbs" class="breadcrumbs">
+                <ul>
+                    <li>You are here: <a href="../../../index.html">Home</a></li>
+                    <li>&raquo; journals</li>
+                    <li>&raquo; <a href="index.html">Assignments</a></li>
+
+                </ul>
+            </div>
+            <div id="breadcrumbs-footer"></div>
+
+
+<div class="blog">
+    
+    
+
+    <div id="blogdescription" class="content-text">
+    
+    </div>
+
+            <div id="postlist" class="fullwidth list-group">
+              <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10182&view=">Assignment IX - Particle Swarm Optimization (PSO) Individual</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 20 June 2018,  9:22 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            
+<h1>Introduction</h1>
+<p>The Particle Swarm Optimization (PSO) was developed as by Kennedy and Eberhart [1] in 1995 as an optimization technique that mimics swarm behaviour in nature, such as birds or fishes. Compared to classical optimization methods, the PSO does not use a gradient and is more similar to random search, but with a memory of where other particles have found optimums.</p>
+<p>The problem statement is as follows;<em> “Implement the PSO algorithm </em><em>(all topology) </em><em>for the given model. Optimize up to 3 parameters. Design the algorithm in a way that allows for distributing model evaluations among team members”. </em></p>
+<p>In this assignment, we will use the PSO to propose a method of finding the optimal parameters, \(PEA, AEA, G_{MH}\) for a stable gait of the JenaFox simulation model. We will be implementing an algorithm described by Simon [2] in order to get the highest velocity possible, maintaining stability. Later, we will in teams use the best performing algorithm of the team members and adapt it to run the optimization as parallel computing to reduce the computation time. Four student teams are to compete against each other to see who can get the best result, with the shortest computation time.</p>
+<p> </p>
+<h1>Approach</h1>
+<p>The paper [1] proposes a general algorithm for PSO, with some alternatives for the programmer to choose. Initially, there are three general dimensions of the algorithm, \(N\) the number of particles in the swarm population, \(G\) number of generations or iterations, and lastly \(D\) the number of parameters to be optimized. The first two are hyperparameters that improve the performance when set to a high value, but then also increase the computation time. The search space to be covered is of \(D\) dimensions and will therefore exponentially increase the complexity of the problem and the computation required when increased.</p>
+<p>As we are implementing an all topology PSO, which means that the neighbourhood is essentially the entire population, we needed to define the best in the neighbourhood as the best in the population. Moreover, it is needed to initialize the particles with a uniform distributed along the dimensions of the search space. The update of the particles happens in two steps</p>
+<p>The values for the hyperparameters are as follows:</p>
+<p>Parameter space min-max</p>
+<p>\(x_min = [0 -15 1]  x_max = [15 0  2]\)</p>
+<p>Maximum learning rate</p>
+<p>\(\phi_{max} = 2.05\)</p>
+<p>As suggested in the paper, the learning rates \(\phi_1\) and \(\phi_2\) were chosen at random for each particle.</p>
+<p>Initially, the parameter limits for \(PEA\) and \(AEA\) was set to +-90 degrees, but for the test populations with only 30 particles, this parameter space turned out to be too large, and no stable gait was found. By decreasing the parameters to +- 15, stable solutions were found more quickly and with higher performance.</p>
+<p>The maximum velocity was initially set to 10% of the search space range but was later changed to 20% to increase the level of exploration in a combination of implementing a decreasing inertia weight to increase the level of exploitation throughout the generations.</p>
+<h5 style="text-align:center;"><img width="560" style="margin-left:auto;margin-right:auto;" alt="PSO_first_generation.jpg" src="../../../files/file/Assignment IX/10351-PSO_first_generation.jpg"></h5>
+<h5 style="text-align:center;">Figure 1: The initialized particle swarm with the performance (velocity) illustrated by the colour scale</h5>
+<p style="text-align:center;"> </p>
+<p style="text-align:center;"><img alt="PSO_fifth_generation.jpg" src="../../../files/file/Assignment IX/10350-PSO_fifth_generation.jpg"></p>
+<h5 style="text-align:center;">Figure 2: The particle swarm after 5 generations. You can see how the swarm is starting to converge towards an optimum</h5>
+<p>When the model was walking stably with 5 particles and 5 generations, it was time to improve the performance. We increased the number of generations to 20 and particles to 30 so that the search space was better covered. However, in order to improve the algorithm, it was necessary to run through the optimization a couple of times, each time taking between 4-7 hours.</p>
+<p>The best result \(v_{max} = 0,897\) was obtained after ~4 hours of computing.</p>
+<h1>References</h1>
+<p>[1] <a title="Particle Swarm Optimization - Kennedy and Eberhart" href="https://www.cs.tufts.edu/comp/150GA/homeworks/hw3/_reading6%201995%20particle%20swarming.pdf">Kennedy, Eberhart; Particle Swarm Optimization, <em>IEEE, </em>1995</a></p>
+<p>[2] <a title="Evolutionary Optimization Algorithms - Simon" href="https://www.researchgate.net/file.PostFileLoader.html?id=576447195b4952c3d05d7f7b&amp;assetKey=AS:374040414965760@1466189593059">Simon; Evolutionary Optimization Algorithms, <em>Wiley</em>, 2001</a></p>
+<p> </p>
+
+        </div>
+
+                <div class="has-attachment panel panel-default collapsible" id="blockpostfiles-10182">
+            <h5 class="panel-heading">
+                <a class="text-left collapsed" data-toggle="collapse" href="#post-attach-10182" aria-expanded="false">
+                    <span class="icon icon-paperclip left" role="presentation" aria-hidden="true"></span>
+                    <span class="text-small"> Attached files </span>
+                     <span class="metadata">
+                        (2)
+                    </span>
+                    <span class="icon icon-chevron-down collapse-indicator pull-right" role="presentation" aria-hidden="true"></span>
+                </a>
+            </h5>
+            <div class="collapse" id="post-attach-10182">
+                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment IX/visual_PSO.m&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download visual_PSO.m
+                            </span>
+                        </a>
+                                                <span class="icon icon-file icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10347&view=" class="inner-link">
+                                visual_PSO.m
+                                <span class="metadata"> -
+                                    [566 B]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment IX/PSO.m&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download PSO.m
+                            </span>
+                        </a>
+                                                <span class="icon icon-file icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10348&view=" class="inner-link">
+                                PSO.m
+                                <span class="metadata"> -
+                                    [3.9KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9990&view=">Assignment VII - Video Snake Robots</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 06 June 2018,  5:28 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            <h1><strong><span lang="en-us">Slithering in Challenging Environments</span></strong></h1>
+<p><strong><span lang="en-us">Find the video here: </span></strong><span lang="en-us"><a href="https://vimeo.com/276963721">https://vimeo.com/276963721</a></span></p>
+<p><strong><span lang="en-us">Password: </span></strong><span lang="en-us">biorobot</span></p>
+<p> </p>
+<p><strong><span lang="en-us">What topic have you chosen?</span></strong></p>
+<p id="user_yui_3_17_2_1_1528296941535_756">Research and applications of locomotion and control strategies of snake-like robots.</p>
+<p><strong>Why do you consider it interesting?<br></strong>The locomotion of a biological snake is one of the few that is capable to move around in various unstructured environments, such as underwater, in trees and mountainous surfaces. If we can mimic this is robots, it gives us access to different environments and a variety of applications.</p>
+<p><strong>What is the relevance to biorobotics?<br></strong>It is the study of how to mimic the locomotion of the biological snake.</p>
+<p><strong>How are you planning to present it?<br></strong>We would like to present research projects and possibly interviews with the researchers, as well as simulations and the theory behind the control and mechanics. One part would be theoretical, with animated slides or live writing on a whiteboard with a voice-over. In addition, there will be presented some examples of applications of these principles. The video material will be taken from the research projects and sources online.</p>
+<p> </p>
+<p><strong>Feedback from other students:<br></strong></p>
+<p>- Applications in medicine, with small enough size to navigate through the human body?<br>- Special sinusoidal locomotion of snakes is highly energy efficient<br>- Serpentine Locomotion with robotic snakes - Saito et al</p>
+<p>- For the presentation:<br>- Make sure that it doesn't get boring only talking and monotone. Change it up.<br>- How about having a live discussion in the video</p>
+<h3> </h3>
+<h1><strong>Sources</strong></h1>
+<h3>Overview of Snake Robots and Fundamentals</h3>
+<p><br><strong>P. Liljebäck, K. Y. Pettersen, Ø. Stavdahl, and J. T. Gravdahl.</strong> 2012. A review on modelling, implementation, and control of snake robots. <em>Robot. Auton. Syst.</em> 60, 1 (January 2012), 29-40. DOI=<a href="http://dx.doi.org/10.1016/j.robot.2011.08.010">http://dx.doi.org/10.1016/j.robot.2011.08.010</a></p>
+<p><span class="art_authors"><strong>Robert Bogue</strong>.</span> <span class="year">2014. </span><span class="art_title"><a href="https://www.emeraldinsight.com/doi/abs/10.1108/IR-02-2014-0309">"Snake robots: A review of research, products and applications"</a></span>, <span class="journalName"><em>Industrial Robot: An International Journal</em>,</span> <span class="volume">Vol. 41</span> <span class="issue">Issue: 3</span>,<span class="page"> pp.253-258</span>,<a href="https://doi.org/10.1108/IR-02-2014-0309">https://doi.org/10.1108/IR-02-2014-0309</a> </p>
+<div class="simple-item-view-authors item-page-field-wrapper table">
+<p><strong>Liljebäck, Pål. </strong>2011. Modelling, Development and Control of Snake Robots. <em>Doctoral Thesis, NTNU. </em><a href="https://brage.bibsys.no/xmlui/handle/11250/260294">https://brage.bibsys.no/xmlui/handle/11250/260294</a></p>
+<h3>Uncle Sam - CMU</h3>
+<p><strong>Weikun Zhen, C. Gong and H. Choset</strong>, "Modeling rolling gaits of a snake robot," <em>2015 IEEE International Conference on Robotics and Automation (ICRA)</em>, Seattle, WA, 2015, pp. 3741-3746. <a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=7139719&amp;isnumber=7138973">http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=7139719&amp;isnumber=7138973</a></p>
+<p>Revisions of Uncle Sam: <a href="http://biorobotics.ri.cmu.edu/projects/modsnake/robots.html">http://biorobotics.ri.cmu.edu/projects/modsnake/robots.html</a></p>
+<p>Article about Uncle Sam on wired: <a href="https://www.wired.com/story/this-robot-snake-means-you-no-harm-really/">https://www.wired.com/story/this-robot-snake-means-you-no-harm-really/</a></p>
+<h3>Mamba &amp; NTNU</h3>
+<p>Article about Mamba: <a href="https://robotnor.no/research/mamba-our-new-modular-snake-robot/">https://robotnor.no/research/mamba-our-new-modular-snake-robot/</a></p>
+<p>Eelume: <a href="https://www.km.kongsberg.com/ks/web/nokbg0238.nsf/AllWeb/2800489E780D5865C1257F99002DCDA6?OpenDocument">https://www.km.kongsberg.com/ks/web/nokbg0238.nsf/AllWeb/2800489E780D5865C1257F99002DCDA6?OpenDocument</a></p>
+<p>Snakes for medical applications: <a href="https://robotnor.no/research/serpentine-robots-for-planetary-exploration-serpex/">https://robotnor.no/research/serpentine-robots-for-planetary-exploration-serpex/</a></p>
+<p>Snakes on Mars: <a href="https://robotnor.no/research/serpentine-robots-for-planetary-exploration-serpex/">https://robotnor.no/research/serpentine-robots-for-planetary-exploration-serpex/</a></p>
+<h3>ACM R5 - Hirose-Fukushima Lab (Tokyo Institute of Technology)</h3>
+<p> Article on ACM R5: <a href="https://techcrunch.com/2010/08/18/video-giant-snake-robot-acm-r5/?guccounter=1">https://techcrunch.com/2010/08/18/video-giant-snake-robot-acm-r5/?guccounter=1</a></p>
+<h3>Video Sources</h3>
+<ul><li>Snake locomotion - how a snake moves: <a href="https://www.youtube.com/watch?v=_RerCt4GAO8">https://www.youtube.com/watch?v=_RerCt4GAO8</a></li>
+<li>Inchworm locomotion - transversal/longitudinal motion: <a href="https://www.youtube.com/watch?v=nWH04p2THsU">https://www.youtube.com/watch?v=nWH04p2THsU</a></li>
+<li>Sidewinding: <a href="https://www.youtube.com/watch?v=qLMriz8l0P8">https://www.youtube.com/watch?v=qLMriz8l0P8</a></li>
+<li>Real snake sidewinding: <a href="https://www.youtube.com/watch?v=B3NbPUTD5qA">https://www.youtube.com/watch?v=B3NbPUTD5qA</a></li>
+<li>Snake climbing a tree: <a href="https://www.youtube.com/watch?v=-aowHonobm8">https://www.youtube.com/watch?v=-aowHonobm8</a></li>
+<li>Hoopsnake: <a href="https://www.youtube.com/watch?v=V5pECp2GM2E">https://www.youtube.com/watch?v=V5pECp2GM2E</a></li>
+<li>Speedy eel: <a href="https://www.youtube.com/watch?v=Z4rIRRoQ7QE">https://www.youtube.com/watch?v=Z4rIRRoQ7QE</a></li>
+<li>DARPA Challenge: <a href="https://www.youtube.com/watch?v=g0TaYhjpOfo">https://www.youtube.com/watch?v=g0TaYhjpOfo</a></li>
+<li>Snake movement incl skin: <a href="https://www.youtube.com/watch?v=liyLoyn9ncA">https://www.youtube.com/watch?v=liyLoyn9ncA</a></li>
+<li>Snake attacking the camera: <a href="https://www.youtube.com/watch?v=wDvBZMvZ4_s">https://www.youtube.com/watch?v=wDvBZMvZ4_s</a></li>
+<li>Eelume: <a href="https://www.youtube.com/watch?v=sZ_-yb-TN9M">https://www.youtube.com/watch?v=sZ_-yb-TN9M</a>, <a href="https://www.youtube.com/watch?v=5i_i1o8m2Rs">https://www.youtube.com/watch?v=5i_i1o8m2Rs</a></li>
+<li>Testing mamba underwater: <a href="https://www.youtube.com/watch?v=tWGTSRFLVF4">https://www.youtube.com/watch?v=tWGTSRFLVF4</a></li>
+<li>Overview of NTNU snake robots: <a href="https://www.youtube.com/watch?v=GeirgHVc9WE">https://www.youtube.com/watch?v=GeirgHVc9WE</a></li>
+<li>Mamba: <a href="https://robotnor.no/research/mamba-our-new-modular-snake-robot/">https://robotnor.no/research/mamba-our-new-modular-snake-robot/</a></li>
+<li>Medical snakes: <a href="https://www.youtube.com/watch?v=m4dCZl0tXVs">https://www.youtube.com/watch?v=m4dCZl0tXVs</a></li>
+<li>Snakes on mars: <a href="https://robotnor.no/research/serpentine-robots-for-planetary-exploration-serpex/">https://robotnor.no/research/serpentine-robots-for-planetary-exploration-serpex/</a></li>
+<li>Uncle Sam: <a href="https://www.youtube.com/watch?v=8VLjDjXzTiU">https://www.youtube.com/watch?v=8VLjDjXzTiU</a>, <a href="https://www.youtube.com/watch?v=te4M-b69fVs">https://www.youtube.com/watch?v=te4M-b69fVs</a></li>
+<li>Tokyo ACM R5: <a href="https://youtu.be/k8j0jNxMeSQ">https://youtu.be/k8j0jNxMeSQ</a>, <a href="https://www.youtube.com/watch?v=ZcWVIuxca5U">https://www.youtube.com/watch?v=ZcWVIuxca5U</a></li>
+<li>Different snake-like gaits: <a href="https://www.youtube.com/watch?v=3YH25vspiJo">https://www.youtube.com/watch?v=3YH25vspiJo</a></li>
+</ul></div>
+<p><strong> </strong></p>
+<h1><strong>Project Management: </strong></h1>
+<p><strong>We used the following software tools and equipment:</strong></p>
+<ul><li>For video editing: iMovie</li>
+<li>Camera: Simply a smartphone camera</li>
+<li>Audio Recording: Audacity, Quicktime</li>
+</ul><p><strong>We estimate the following times spent:</strong></p>
+<ul><li>planning: ~7h</li>
+<li>writing the video script: ~4h</li>
+<li>recording audio: ~2-3h</li>
+<li>assembling the video: ~9h</li>
+</ul><p><strong>The following parts were taken over by {Gyri, Arne}</strong></p>
+<p> </p>
+<table style="height:211px;border-width:3px;width:514px;margin-left:auto;margin-right:auto;" width="514"><tbody><tr style="height:23px;"><td style="width:317px;height:23px;border-width:3px;"><strong>Part / Task</strong></td>
+<td style="width:195px;height:23px;border-width:3px;"><strong>Person</strong></td>
+</tr><tr style="height:23px;"><td style="width:317px;height:23px;border-width:3px;">Awesome introduction with falling humanoids</td>
+<td style="width:195px;height:23px;border-width:3px;">Gyri</td>
+</tr><tr style="height:23.5px;"><td style="width:317px;height:23.5px;border-width:3px;">Modelling</td>
+<td style="width:195px;height:23.5px;border-width:3px;">Gyri</td>
+</tr><tr style="height:23px;"><td style="width:317px;height:23px;border-width:3px;">Control</td>
+<td style="width:195px;height:23px;border-width:3px;">Arne</td>
+</tr><tr style="height:23px;"><td style="width:317px;height:23px;border-width:3px;">Applications</td>
+<td style="width:195px;height:23px;border-width:3px;">Both</td>
+</tr><tr style="height:23px;"><td style="width:317px;height:23px;border-width:3px;">Challenges</td>
+<td style="width:195px;height:23px;border-width:3px;">Arne</td>
+</tr><tr style="height:23px;"><td style="width:317px;height:23px;border-width:3px;">Outlook</td>
+<td style="width:195px;height:23px;border-width:3px;">Gyri</td>
+</tr><tr style="height:24px;"><td style="width:317px;height:24px;border-width:3px;">Video Editing</td>
+<td style="width:195px;height:24px;border-width:3px;">Gyri</td>
+</tr><tr style="height:24px;"><td style="width:317px;height:24px;border-width:3px;">Beautiful Sketches for the Video</td>
+<td style="width:195px;height:24px;border-width:3px;">Both</td>
+</tr></tbody></table>
+        </div>
+
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9955&view=">Assignment VIII - Neural Network Based Controller </a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 24 May 2018, 10:42 AM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            
+<h2>Introduction</h2>
+<p class="p1">In order to control and achieve human-like locomotion, researchers have been inspired by the human control organ; the brain and its network of neurons. Although the human brain is complex, a neural network is able to simulate transmission of information in the electrical impulses of the neurons and learn patterns to make decisions based on training data. In this document, we will be presenting a neural network based controller that generates a stable gait for a simulation of a robotic bipedal walker. </p>
+<h2 class="p1">Problem Specification</h2>
+<p>The problem is defined as <em>"You will program and explore the neural network based controller as described in Geng 2006. You will be provided with a sample dataset for testing, which will contain a time series of controller input data. Once the controller is generating useful outputs, you will try them on the multi-body simulation. Document your approach and code in Mahara. Comment on the challenges you discovered during implementation. Identify parameters that influence the robots average forward velocity. Comment on the challenges you discovered during implementation. Identify parameters that influence the robots average forward velocity."</em>.  This means that we will implement a neural network based control based on the controller model in the paper [1] and the corresponding JenaFox robot model in Simulink. The paper [1] shows that a controller based on a neural network can in some cases be a better control solution to bipedal walking that other approaches, such as zero moment point or inverted pendulum because it can walk with a stable high speed. </p>
+<h2 class="p1">The Robot Model</h2>
+<p>For simulating the neural controller, we have been provided with a multi-body robot model in Simulink. This is a bipedal robot, with two actuated joints in each leg, a hip and a knee. In each joint, there are motors that adjust the angle and these angles are the sensory input for the controller. There is also a ground contact sensor in each foot. The movement of the robot is constrained to the two-dimensional x-y space. For testing the controller in the simulation, we have been provided with a sample dataset with time series of input data. Initially, a stable controller based on an equilibrium point was provided. The task was to change the existing controller with a neural network based one. The controller is implemented in MatLab as a function block and will be called during the simulation in Simulink. <img width="1077" alt="AVIII_JenaFox_Simulink.jpeg" src="../../../files/file/Assignment VIII/10094-AVIII_JenaFox_Simulink.jpeg"></p>
+<h5 style="text-align:center;">Figure 1: A schematic of the robot model and neuronal controller in Simulink </h5>
+<h2 class="p1">Development of the Neuronal Controller</h2>
+<p>The sensor-driven neuronal controller will be implemented based on the description in Geng's paper [1] with some modifications. In figure 2, we can see the control parameters for the robot model taken from [1]. However, in our model, we will correct the convention of flexion and extension in the hip joint and the axis of reference as seen in figure 3. </p>
+<p>There are indices s (sensor) and m (motor), h (hip) and k (knee), l (left) and r (right), as well as e (extensor) and f (flexor) used in this paper to specify the different parameters.</p>
+<p style="text-align:center;"><img width="589" height="307" alt="AVIII_Geng_Control_Parameters.jpeg" src="../../../files/file/Assignment VIII/10074-AVIII_Geng_Control_Parameters.jpeg"></p>
+<h5 style="text-align:center;">Figure 2 : Control parameters for the joint angles, taken from [1]</h5>
+<p style="text-align:center;"><img width="380" height="326" alt="AVIII_Conventions.jpeg" src="../../../files/file/Assignment VIII/10075-AVIII_Conventions.jpeg"></p>
+<h5 style="text-align:center;">Figure 3 : Definitions and coordinate system for our model </h5>
+<p>Here is an overview of all the controll parameters of the model:</p>
+<table style="width:413px;margin-left:auto;margin-right:auto;"><tbody><tr style="height:22.75px;"><td style="width:337px;height:22.75px;"><strong>Parameters for Sensory Neurons</strong></td>
+<td style="width:180px;height:22.75px;"> <strong>Values</strong>
+</td>
+<td style="width:76px;height:22.75px;"><strong>Unit</strong></td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(\alpha_{ES(FS)}, \alpha_{AL(AR)}\)</td>
+<td style="width:180px;height:22px;text-align:right;">2</td>
+<td style="width:76px;height:22px;text-align:left;"> </td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(\theta_{ES,h}\)</td>
+<td style="width:180px;height:22px;text-align:right;">5</td>
+<td style="width:76px;height:22px;text-align:left;">deg</td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(\theta_{FS,h}\)</td>
+<td style="width:180px;height:22px;text-align:right;">-10</td>
+<td style="width:76px;height:22px;text-align:left;">deg</td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(\theta_{ES,k}\)</td>
+<td style="width:180px;height:22px;text-align:right;">-3</td>
+<td style="width:76px;height:22px;text-align:left;">deg</td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(\theta_{FS,k}\)</td>
+<td style="width:180px;height:22px;text-align:right;">-80</td>
+<td style="width:76px;height:22px;text-align:left;">deg</td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;"><strong>Parameters for Motor Neurons</strong></td>
+<td style="width:180px;height:22px;text-align:right;"><strong>Values</strong></td>
+<td style="width:76px;height:22px;text-align:left;"><strong>Unit</strong></td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(\tau\)</td>
+<td style="width:180px;height:22px;text-align:right;">0.01</td>
+<td style="width:76px;height:22px;text-align:left;">s</td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(M_{AMP}\)</td>
+<td style="width:180px;height:22px;text-align:right;">3 </td>
+<td style="width:76px;height:22px;text-align:left;"> </td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(G_{Mh}\)</td>
+<td style="width:180px;height:22px;text-align:right;">1.5 </td>
+<td style="width:76px;height:22px;text-align:left;"> </td>
+</tr><tr style="height:22px;"><td style="width:337px;height:22px;">\(G_{Mk}\)</td>
+<td style="width:180px;height:22px;text-align:right;">0.9* \(G_{Mh}\)</td>
+<td style="width:76px;height:22px;text-align:left;">  </td>
+</tr></tbody></table><h5 style="text-align:center;">Table 1 : Controll parameters of the model</h5>
+<h3>The Modelling of the Neural Network</h3>
+<p>In this model, we will be using two types of neurons; sensory neurons and motor neurons, as well as stretch receptors and ground contact sensors. The top-level structure of the network is shown in figure 4. The network is adapted to our model by exchanging the motor neurons and the respective sensor neurons in the hips and with changes to the stretch receptors.</p>
+<p><img width="1065" alt="AVIII_Geng_Neural_Structure.jpeg" src="../../../files/file/Assignment VIII/10058-AVIII_Geng_Neural_Structure.jpeg"></p>
+<h5 style="text-align:center;">Figure 4: The neuron model of the controller. The small numbers give the values of the connection weights. <br>(Adapted to our model from [1] )</h5>
+<h4>Stretch Receptors</h4>
+<p>To model sensory neurons, we often use the sigmoid function as the activation function because it is limited between zero and one. In our model, the stretch receptors are signal the attainment of the AEP (Anterior Extreme Position), the threshold for the flexion of the hip. If the hip angle exceeds the threshold of \(\theta_{AL}\) or \(\theta_{AR}\) the respective receptor is activated and the output of the sigmoid is changed rapidly from 0 to 1. As we exchanged the extension and the flexion convention of the hips, the threshold is defined as the AEP for flexion in out model. </p>
+<p>\(\theta_{AL} = \theta_{AR} = \theta_{HF} \)</p>
+<p>\(\rho_{AL} = (1 + \exp^{\alpha_{AL}(\theta_{AL}-\phi)})^{-1} \)</p>
+<p>\(\rho_{AR} = (1 + \exp^{\alpha_{AR}(\theta_{AR}-\phi)})^{-1} \)</p>
+<h4>Ground Contact Sensors</h4>
+<p>The ground contact sensors are activated when the foot is in contact with the ground and outputs a boolean. In the paper [1] the output is a voltage from piezo sensors, but in our model, we use the output of zero instead of the sigmoid activation function and use the output directly. </p>
+<p>\(\rho_{GL} = GL \)</p>
+<p>\(\rho_{GR} = GR \)</p>
+<h4>Angle Sensory Neurons</h4>
+<p>As we can see in figure 4, the neuron modules in each joint are composed of one sensor neuron and one motor neuron. Whenever the threshold is exceeded, the angle sensor directly inhibits the corresponding motor neuron. The angle sensors are modelled similarly to the receptor sensors with a sigmoid activation function. This leads to the implementation of these equations for the activation functions:</p>
+<p>\(\rho_{ES} = (1 + \exp^{\alpha_{ES}(\theta_{ES} - \phi)})^{-1} \)</p>
+<p>\(\rho_{FS} = (1 + \exp^{\alpha_{FS}(\phi -\theta_{FS})})^{-1} \)</p>
+<h4>Motor Neurons</h4>
+<p>The motor neurons can be modelled as an electrical circuit with a summation of the weighted sensor inputs and a charging and decharging capacitor. This circuit can be implemented numerically, but in this model we use the analytically form of the equation:<br>\(\tau\frac{dy(t)}{dt} = -y + \sum{w_i\rho_i}\)</p>
+<p>Where \(\tau = RC\) the properties of the resistor and the capacitor in the electrical circuit. </p>
+<p>By solving this differential equation, we obtain:<br>\(y(t) = y_0\exp{-t/\tau} + \sum{w_i\rho_i}\)</p>
+<p>\(y\) is here the simulation of the action membrane function for each of the neurons over time. When the charging of the neuron reaches the threshold it is activated and we get an action potential spike before a decharge. We will in this model assume that the activation is instant and we will use \(dt\) instead of the real-time and \(y_0 = y_{t-1}\), as we use a time-step dataset for our simulation. We model the activation of the motor neuron the same way as we did for the sensor neurons, with a sigmoid function, which gives us this equation: </p>
+<p>\(u_{EM{FM}} = (1 + \exp^{\theta_M - y})^{-1}\)</p>
+<p>\(u\) is here the output voltage of the neuron. With this we can calculate the voltage for the motors to control the torque applied. </p>
+<p>\(U = M_{AMP}G_{M}(u_EM - u_FM)\)</p>
+<p>where \(M_{AMP}\) represents the magnitude of the servo amplifier and \(G_{M}\) is the output gain of the motor neurons in the joint.</p>
+<h3>Implementation and Results</h3>
+<h4>Sample Set</h4>
+<p>In order to feed the sample set for a discrete time step and in this way test the neuronal controller, a separate MatLab file "Test.m" was created with a for-loop. The only data for the file that is needed, are the parameters needed in the controller, and the others can be filtered out and not considered. At each step, the data is and plots the time series.</p>
+<p><img width="778" style="margin-left:auto;margin-right:auto;" alt="AVIII_Plot_MotorVoltages_SampleSet.jpg" src="../../../files/file/Assignment VIII/10149-AVIII_Plot_MotorVoltages_SampleSet.jpg"></p>
+<h5 style="text-align:center;">Figure 5: Plot of the motor voltages for the sample data set</h5>
+<p>As we can see from figure 5, the knee plots have a positive spike right before the flexion of the knee (negative voltage). And it seems that the amplitude of the spike is higher for the left knee than for the right. The hip voltages look, on the other hand, like the example plots provided in Moodle.</p>
+<h3>Simulation with the multi-body </h3>
+<table style="height:66px;width:217px;margin-left:auto;margin-right:auto;"><tbody><tr style="height:22px;"><td style="width:133px;height:22px;"><strong>Initial Conditions</strong></td>
+<td style="width:61px;height:22px;"><strong>Values</strong></td>
+</tr><tr style="height:22px;"><td style="width:133px;height:22px;">\(\phi_{IC_HR}\)</td>
+<td style="width:61px;height:22px;text-align:right;">-29 deg</td>
+</tr><tr style="height:22px;"><td style="width:133px;height:22px;">\(\phi_{IC_HL}\)</td>
+<td style="width:61px;height:22px;text-align:right;">10 deg</td>
+</tr><tr style="height:22px;"><td style="width:133px;height:22px;">\(\phi_{IC_KR}\)</td>
+<td style="width:61px;height:22px;text-align:right;"> 0 deg</td>
+</tr><tr style="height:22.5312px;"><td style="width:133px;height:22.5312px;">\(\phi_{IC_KL}\)</td>
+<td style="width:61px;height:22.5312px;text-align:right;"> 0 deg</td>
+</tr></tbody></table><h5 style="text-align:center;">Table 2 : Initial conditions of the multi-body simulation</h5>
+<p>After implementing the controller into the multi-body model with the initial conditions from table 2, it walks for right under three seconds. <img width="827" alt="AVIII_Plot_MotorVoltages.jpg" src="../../../files/file/Assignment VIII/10150-AVIII_Plot_MotorVoltages.jpg"></p>
+<h5 style="text-align:center;">Figure 6 : The motor voltages with the multi-body model</h5>
+<p>Looking into what parameters that can increase the forward speed, and therefore make the robot walk faster, there are two things that have to be maximized. The force thrusting forward (x-direction) is defined by the torque for stance for an inverted pendulum, in other words, the hip torque. As we want to push forward, this torque needs to be maximized with a stability constraint. In order to do this, we can increase the parameter \(G_{MH}\). For the hip torque to have the maximal effect, the time during which the stance foot is on the ground should be longer. As this stance time is proportional to the difference between the AEP and the \(\theta_{FH}\), this difference should be increased, by for instance decreasing \(\theta_{FH}\).</p>
+<h3 style="text-align:center;"><img width="623" alt="AVIII_StateSpace_IC.jpg" src="../../../files/file/Assignment VIII/10151-AVIII_StateSpace_IC.jpg"></h3>
+<h5 style="text-align:center;">Figure 7 : Plot of the state space model</h5>
+<p>As we can see from the state space model, our neuronal controller is not particularly stable and loses stability for every step. When trying to find parameters that affect the forward speed, it only results in the model falling. Even for smaller changes, as well as larger changes, in the hip parameters, such as \(\theta_{FH} +- 1 or +-5 \) or \(G_{MH} +-0.1 or +- 5\) result in an unstable gait, and the model stops running after less than a second. It should be possible to adjust and increase the forward velocity by increasing the \(G_{MH}\) and tuning(\theta_{FH}\) to stabilise the gait. However, with numerous tries of manual tuning, I have yet to find a stable gait with other parameters.</p>
+<h2>Challenges and Discussion</h2>
+<p>Firstly, the main challenge in implementing a neural network is to find the right tuning values for weights and thresholds. However, in this assignment, we already had these parameters from the Geng paper [1]. In the beginning, it was a challenge to identify which neuron is doing what during the movement and keep track of right and left, extension and flexion, and hip and knee. Being consistent in the MatLab code with the indices, was therefore necessary. Later, the implementation of the time step in Simulink and MatLab and using the derived time instead of continuous time was a hurdle. There was also a confusion of the convention in the Geng paper of flexion and extension in the hip, which had consequences for the stretch receptor, which I missed for a long time. In addition, trying to find out what causes the spikes in the motor voltages for the knees and how to prevent it from happening, is still something that I can't figure out. And finally finding or tuning the parameters in order to find a stable gait with a different velocity proved to be the greatest challenge of this assignment.</p>
+<p>Apart from the challenges, the implementation of a neural network based controller was not very difficult, even without having an in-depth understanding of the entire system. Using the Geng paper [1] and the equilibrium point controller as a starting point, eased the process, but it took some time to get into the already existing models and the different notation. And in the end, a (shortly) stable gait was achieved. However, by manually tuning the parameters, one rapidly risks losing stability. In the case of a desired state output, like for example forward velocity, one needs to find better ways of tuning the parameters to find a stable gait. </p>
+<p>  </p>
+<div>
+<h2>References</h2>
+<p>[1] Geng, T.; Porr, B. ; Wörgötter, F.: Fast Biped Walking with a Sensor-driven Neuronal Controller and Real-time Online Learning. In: <em>The International Journal of Robotics Research</em> (2006); Nr. 25; S. 243 DOI: 10.1177/0278364906063822</p>
+</div>
+
+        </div>
+
+                <div class="has-attachment panel panel-default collapsible" id="blockpostfiles-9955">
+            <h5 class="panel-heading">
+                <a class="text-left collapsed" data-toggle="collapse" href="#post-attach-9955" aria-expanded="false">
+                    <span class="icon icon-paperclip left" role="presentation" aria-hidden="true"></span>
+                    <span class="text-small"> Attached files </span>
+                     <span class="metadata">
+                        (2)
+                    </span>
+                    <span class="icon icon-chevron-down collapse-indicator pull-right" role="presentation" aria-hidden="true"></span>
+                </a>
+            </h5>
+            <div class="collapse" id="post-attach-9955">
+                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment VIII/JenaFox_moodle_ISB.slx&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download JenaFox_moodle_ISB.slx
+                            </span>
+                        </a>
+                                                <span class="icon icon-archive icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10140&view=" class="inner-link">
+                                JenaFox_moodle_ISB.slx
+                                <span class="metadata"> -
+                                    [73.5KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment VIII/neuro_control_test.m&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download neuro_control_test.m
+                            </span>
+                        </a>
+                                                <span class="icon icon-file icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10161&view=" class="inner-link">
+                                neuro_control_test.m
+                                <span class="metadata"> -
+                                    [1.3KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9855&view=">Assignment V - Poster Presentation</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 23 May 2018,  2:20 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            <p>Each of the three groups should prepare one poster (A0, landscape) using the provided <a href="https://www.moodle.tum.de/mod/folder/view.php?id=706517">templates </a>(above). The poster should contain explanations for general concepts in <strong>design </strong>and <strong>control </strong>for each group of robots. The extend of used biorobotics approach should be specified. This section is prepared by the entire group and should occupy the larger part of the poster. <br>Each group member also prepares a brief characterisation of their example robot (main properties, one or two bullet points for specifics w.r.t. the general concepts explained above. Please put your name on your section!</p>
+        </div>
+
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9752&view=">Assignment VI - The Spring Mass Walker</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 11 May 2018,  5:11 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            
+<h2 class="p1">Introduction</h2>
+<p class="p1">It is important to understand the mechanics of human locomotion to be able to recreate the same mechanical traits in robots. It has been shown that modelling human walking mechanics is challenging due to the gaits complexity, but running patterns can be however be modelled as a spring-mass system with a defined angle of attack. In this document, we will be presenting a model for the human walking gait based on the equivalent of the running model with a spring-mass system.</p>
+<h2 class="p1">Problem specification</h2>
+<p>The problem is defined as "<em>Program a spring-mass-walker in Matlab/Simulink describe the specific challenges of modelling bipedal walking explore the possible forward speed (maximum instantaneous and average speed)</em>".  As well as developing a walking spring-mass model we will discuss challenges of modelling bipedal walking and look into a way of finding it's parameters. Although stiff legs are often used to model the dynamics of human walking we will in this assignment develop a model based on the results of the paper published by Geyer [1]. Finding the right model for walking is difficult, and one has earlier used models with stiff legs connected to a mass, simulation the human body's centre of mass (CoM), which is a simpler approximation. However, this model type is not able to describe the forces in the double support phase, when the two feet are both in contact with the ground. As we can see from Geyer's results simulating two compliant mass-less legs in a spring-mass model, the characteristic stance dynamics is incorporated and gives better results. The spring-mass walker is, however, a more complex model.</p>
+<h5 style="text-align:center;">
+<img width="1200" alt="AVI_Geyer_supportphases.png" src="../../../files/file/Assignment VI/9874-AVI_Geyer_supportphases.png"> Figure 1: Illustration of the spring-mass model taken from Geyer [1]</h5>
+<p> </p>
+<p>The parameters used for the spring-mass walker are;<br>Length of the springs \(l_0\)<br>Spring stiffness \(k\)<br>Mass \(m\)<br>Angle of attack \(a_TD\)<br>Foot point position at instant i \(FP_i\)</p>
+<p>In Figure 1, we see how the spring-mass model is divided into four phases. There are two types of support phases, single (one spring in contact with the ground) and double (both springs in contact with the ground). With this SMW model it is possible, like shown in the figure, to model bipedal walking, also for the forces during double support, however, the challenge is to find the right parameters. In the next part, we will develop the model.</p>
+<h2>Developing the SMW model</h2>
+<p>In order to model the dynamics of human walking, we need to start with the same characteristics that of a human. Firstly, the mass of an average human is 80kg and leg length of 1m, we can find the right stiffness of the springs. Further, we need to find the right angle of attack, which is defined as the angle between the spring and the ground at touch down (TD). To achieve a stable model, you would also need to find appropriate initial conditions, such as the height \(y_0\) and the velocity \(\dot(y)_0\). Without the right parameters, this model is highly unstable and would fall shortly after initialization.</p>
+<p>We can interpret the SMW as the sum of two subsystems, one for each spring, that overlap in the double support phase. The Simulink model for such a subsystem was provided by the professor as a model for a spring-mass runner with one leg. This running model is a good starting point for developing the walking model.</p>
+<p style="text-align:center;"> <img width="1200" alt="AVI_simulink_springforce.png" src="../../../files/file/Assignment VI/9863-AVI_simulink_springforce.png"></p>
+<h5 style="text-align:center;">Figure 2: The Simulink block for a single spring</h5>
+<p> </p>
+<p>In figure 2, we see the foot point position of the spring \(xFp\) and the position of the mass are used to compute the current spring length and further the forces applied to the mass by this spring. By using two of these spring force blocks we can model our SMW in Simulink.</p>
+<p style="text-align:center;"><img width="1200" alt="AVI_simulink_whole.png" src="../../../files/file/Assignment VI/9866-AVI_simulink_whole.png"></p>
+<h5 style="text-align:center;">Figure 3: The entire Simulink model for the SMW</h5>
+<p>In order to simulate the bipedal walking, we need to create a condition for triggering or enabling the overlapping of the two springs, the double support phase. This is called the touchdown (TD)/take-off (TO) conditions. In this model, we have chosen to trigger at the touchdown.</p>
+<p style="text-align:center;"><img width="1200" alt="AVI_simulink_steps.png" src="../../../files/file/Assignment VI/9864-AVI_simulink_steps.png"></p>
+<h5 style="text-align:center;">Figure 4: The Simulink block for the triggering of the double support phase</h5>
+<p>As we can see from figure 4, the main idea is that when the forward spring is at TD \(y&lt;l_0*sin(a_TD) \) and the mass is going down towards the ground \(\dot(y)&lt;=0\) it takes one step, both springs are on the ground, and the double support phase is triggered. The assumption that the angle of attack is constant throughout the simulation is very important for the computation of the new foot point.</p>
+<p style="text-align:center;"><img width="1200" alt="AVI_simulink_changingsteps.png" src="../../../files/file/Assignment VI/9862-AVI_simulink_changingsteps.png"></p>
+<h5 style="text-align:center;">Figure 5: The Simulink block for the changing of the foot point position</h5>
+<p style="text-align:center;"><img width="1200" alt="AVI_simulink_touchdown.png" src="../../../files/file/Assignment VI/9865-AVI_simulink_touchdown.png"></p>
+<h5 style="text-align:center;">Figure 6:  The Simulink block for calculating and storing the foot point position at TD</h5>
+<p style="text-align:left;">The triggering TD triggers the double support phase and also the block that calculates the new foot point position of the spring shown in figure 6. In figure 5, we use a flip-flop to switch between the two spring subsystems and to avoid that the model just skips with the same leg always in front.</p>
+<p>Excluding all perturbations, the forces of the total system are conservative. We have assumed in this model that we should have a total energy of 810,7 J, which is considered as the real energy for the human walking dynamics.</p>
+<p>In order to complete the SWM we also need to derive the movement of the CoM over time from the forces that are applied to it. We do that by computing the equations of motion for a two-dimensional space (both in x- and y-direction).</p>
+<p>\(m*\ddot(x) = \sum(F_x) \)</p>
+<p>\(m*\ddot(y) = \sum(F_y) \)</p>
+<p> For the two directions, horizontal and vertical, the three forces that are applied to the mass will be the two springs and the force of gravity (only applied in the vertical direction). This leads us to the solution.</p>
+<p>\(m*\ddot(x) = Fx_S1 + Fx_S2  \)</p>
+<p>\(m*\ddot(y) = Fy_S1 + F_S2 + F_g \)</p>
+<p>By defining \( F_si = (l_0 – l_i)*k \) and \( l_i = \sqrt{(x_FPxi - x)^2 + y^2} \) and developing further, we get:</p>
+<p>\(m*\ddot(x) = \frac{x_FPx1}{dl_1}*F_s1 + \frac{x_FPx2}{dl_2}*F_s2   \)</p>
+<p>\(m*\ddot(y) = \frac{y}{dl_1}*F_s1 + \frac{y}{dl_2}*F_s2  + g*m \)</p>
+<p>As you can see in figure 3, we use these equations to compute the movement of the SMW over time.</p>
+<h2>Results</h2>
+<p style="text-align:left;">Now the model is complete and by choosing the right parameters, the model should also be stable. The first result would be to look at the trajectory of the CoM, where we can see the movement and the stability of the SWM.</p>
+<p style="text-align:center;"><img width="560" alt="AVI_CoM.png" src="../../../files/file/Assignment VI/9886-AVI_CoM.png"></p>
+<h5 style="text-align:center;">Figure 7: The trajectory of the CoM of the model</h5>
+<p><img width="1200" alt="AVI_energies.png" src="../../../files/file/Assignment VI/9892-AVI_energies.png"></p>
+<h5 style="text-align:center;">Figure 8: The plot of the energies of the model</h5>
+<p>From figure 8, we can check if our model is energy conservative and the switching between the two springs.</p>
+<p style="text-align:center;"> <img width="722" alt="AVI_springforces.png" src="../../../files/file/Assignment VI/9869-AVI_springforces.png"></p>
+<h5 style="text-align:center;">Figure 9: The plot for spring forces both in vertical and horizontal direction for three steps</h5>
+<p>The dynamics of the human walking gait is often described through the forces in vertical and horizontal direction. That is also what one often try to imitate when developing models, and is a good way of comparing a model to a real walking human. In figure 9, we can see that it is actually possible to get close to model the real walking dynamics with a SMW model. You can also see the two legs/springs switching over time and overlapping. </p>
+<h2>Discussion</h2>
+<p>We have now seen that the SWM can be used to imitate the human walking gait. However, it has its limitations and can be improved. As a part of the assignment, we need to look into the possible forward speed (maximum instantaneous and average speed. Looking at our results for the stable model, we see that with the initial horizontal velocity of 1,06 m/s, the speed changes throughout the walk with a maximum of 1,29 m/s and an average of 1,16m/s.</p>
+<p style="text-align:center;"> <img width="560" alt="AVI_forwardspeed.png" src="../../../files/file/Assignment VI/9887-AVI_forwardspeed.png"></p>
+<h5 style="text-align:center;">Figure 10: Plot of the velocity for an initial horizontal velocity of 1,06m/s</h5>
+<p style="text-align:center;"><img width="560" alt="AVI_possiblespeed.png" src="../../../files/file/Assignment VI/9885-AVI_possiblespeed.png"></p>
+<h5 style="text-align:center;">Figure 10: Plot of the velocity for an initial horizontal velocity of 1,22m/s</h5>
+<p> </p>
+<p>By playing around with the model, only changing the initial horizontal velocity, it is possible to get a nearly stable model for a maximum of around 1,22 m/s as initial velocity. This model will be unstable in the beginning but will stabilize for some time as seen in figure 11. The average horizontal speed will in this case also be increased slightly to 1,17 m/s, but it seems to stabilize at the same speed as the more stable model.</p>
+<p style="text-align:center;"><img width="623" height="550" alt="AVI_phaseplot.png" src="../../../files/file/Assignment VI/9868-AVI_phaseplot.png"> </p>
+<h5 style="text-align:center;">Figure 11: Phase plot of the stable model with an initial velocity of 1,06m/s</h5>
+<p style="text-align:center;"><img width="560" alt="AVI_phaseplot_speed.png" src="../../../files/file/Assignment VI/9888-AVI_phaseplot_speed.png"></p>
+<h5 style="text-align:center;">Figure 12: Phase plot of the unstable model with an initial velocity of 1,22m/s</h5>
+<p> </p>
+<p> </p>
+<p>Finding the parameters that allow our model to be stable is the greatest challenge of modelling a bipedal walking using the SMW model. Although there are some boundaries to your parameters to start with the parameter space is limited as discussed by Geyer [1]. The assumptions made in the beginning for the mass and leg length corresponds to an average human, but for the other parameters need to be found through testing. This tuning of parameters is time-consuming and complex, but one solution to this would be to use artificial intelligence such as a neural network. </p>
+<h2>References</h2>
+<p> [1] Geyer, H. ; Seyfarth, A. ; Blickhan, R.: Compliant leg behaviour explains basic dynamics of walking and running. In: <em>Proceedings of the Royal Society B: Biological Sciences 273 (2006)</em>, nov, Nr. 1603, S. 2861-2867. <br><a href="http://dx.doi.org/10.1098/rspb.2006.3637">http://dx.doi.org/10.1098/rspb.2006.3637</a>. – DOI 10.1098/rspb.2006.3637</p>
+<p style="text-align:left;"> </p>
+<p> </p>
+
+        </div>
+
+                <div class="has-attachment panel panel-default collapsible" id="blockpostfiles-9752">
+            <h5 class="panel-heading">
+                <a class="text-left collapsed" data-toggle="collapse" href="#post-attach-9752" aria-expanded="false">
+                    <span class="icon icon-paperclip left" role="presentation" aria-hidden="true"></span>
+                    <span class="text-small"> Attached files </span>
+                     <span class="metadata">
+                        (2)
+                    </span>
+                    <span class="icon icon-chevron-down collapse-indicator pull-right" role="presentation" aria-hidden="true"></span>
+                </a>
+            </h5>
+            <div class="collapse" id="post-attach-9752">
+                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment VI/AVI_walking_SLIP.slx&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download AVI_walking_SLIP.slx
+                            </span>
+                        </a>
+                                                <span class="icon icon-archive icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9893&view=" class="inner-link">
+                                AVI_walking_SLIP.slx
+                                <span class="metadata"> -
+                                    [39.6KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment VI/AVI_MatLabCode_REIERSEN.m&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download AVI_MatLabCode_REIERSEN.m
+                            </span>
+                        </a>
+                                                <span class="icon icon-file icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9894&view=" class="inner-link">
+                                AVI_MatLabCode_REIERSEN.m
+                                <span class="metadata"> -
+                                    [4.6KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9537&view=">Assignment IV - The Bouncing Mass Problem</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 25 April 2018, 11:23 AM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            
+<h2>1. Introduction</h2>
+<p>In this assignment, we are going to look into a falling mass on a spring. This problem can be considered as a hybrid dynamical system<a title="Introduction to hybrid dynamical systems" href="https://www.ecse.rpi.edu/~agung/course/vanderschaft.pdf">[1]</a> because it is a coupling between continuous and discrete variables. A typical example of such a system is a temperature control system with a heater and a thermostat. I this case we have both continuous variables such as the room temperature and discrete variables such as the operating mode of the heater (on/off). In our bouncing mass problem, we have the continuous variables such as the position and a boolean, the switch between the two phases of freefall and stance.</p>
+<p>In this paper, we will solve this problem both analytically and numerically and then compare the two approaches. <br><br></p>
+<h2>2. Problem statement</h2>
+<p><em>"Describe the trajectory of a falling (mass 1kg) dropped from about 1.2m mounted on top of a vertical, massless spring (resting length 1m, stiffness 100N/m). Calculate the energy at each time step. Assume the acceleration due to gravity to be -9.81 m/s² and neglect drag (resistance of air). Compare an analytical solution and numerical solution. Investigate the influence of step size, absolute and relative tolerance on the numerical solution." </em></p>
+<p>We can divide the trajectory into two phases. The first being the mass in free fall, where only the force of gravity is applied to the mass. The second phase will start when the spring reaches the ground and the force of the spring is also applied. We assume that the mass is solid and not deformable.</p>
+<p style="text-align:center;"> </p>
+<p style="text-align:center;"><img width="393" height="394" style="margin-left:auto;margin-right:auto;" alt="AIV_Trajectory.jpg" src="../../../files/file/Assignment IV/9539-AIV_Trajectory.jpg"></p>
+<h5 style="text-align:center;">Figure 1: Drawing of the reference space and the two phases: Freefall and Stance</h5>
+<p> </p>
+<p>Let's define some of the parameters: </p>
+<table style="height:140px;width:542px;"><tbody><tr><td style="width:245px;">
+<ul><li>\(x_0 = 1,2m \)</li>
+</ul></td>
+<td style="width:295px;">Height from which the mass is dropped</td>
+</tr><tr><td style="width:245px;">
+<ul><li>\(k = 100N/m \)</li>
+</ul></td>
+<td style="width:295px;">Stiffness of the spring </td>
+</tr><tr><td style="width:245px;">
+<ul><li>\(l_0 = 1m \)</li>
+</ul></td>
+<td style="width:295px;">Natural/resisting length of the spring</td>
+</tr><tr><td style="width:245px;">
+<ul><li>\(g = -9,81m/s^2 \)  </li>
+</ul></td>
+<td style="width:295px;">Gravitational acceleration</td>
+</tr><tr><td style="width:245px;">
+<ul><li>\(m = 1kg \)  </li>
+</ul></td>
+<td style="width:295px;">
+<p>Mass of the falling object</p>
+</td>
+</tr></tbody></table><h2>
+<br>3. Analytical approach</h2>
+<p>In order to solve the problem, we analyse the forces applied to the mass in both phases and use Newton's second law.</p>
+<p>\[\sum F = m\ddot{x}(t)\] </p>
+<h3>3.1 Freefall phase \(x \geq l_0\)</h3>
+<p>The initial conditions for the freefall phase, is \( x_0\) and \(\dot{x}_0=0m/s\) and the only force that is applied is the force of gravity \(F_g\). </p>
+<p>\[ \sum F = F_g = mg\]</p>
+<p>\[\Rightarrow m\ddot{x}(t) = mg\]</p>
+<p>\[\Rightarrow \ddot{x}(t) = g\]</p>
+<p>By integrating this we obtain the velocity and the position.</p>
+<p>\[\Rightarrow \dot{x}(t) = \int g = gt + \dot{x}_0\]</p>
+<p>\[\Rightarrow x(t) = \int (gt + \dot{x}_0) = \frac{1}{2}gt^2 + \dot{x}_0t + x_0 \]</p>
+<p> When we put in the initial conditions, we get:</p>
+<p>\[x(t) = \frac{1}{2}gt^2 +  x_0 \]</p>
+<p> </p>
+<h3>3.2 Stance phase \(x&lt;l_0\)</h3>
+<p>We enter the stance phase as \(x=l_0\) with the velocity of \(\dot{x}_1\) . Here both the force of gravity \(F_g\) and the force of the spring \(F_s\) is applied to the mass. </p>
+<p>\[ \sum F = F_g + F_s = mg + k(l_0-x(t))\]</p>
+<p>\[ \Rightarrow m\ddot{x}(t) = mg + k(l_0-x(t))\]</p>
+<p>\[ \Rightarrow \ddot{x}(t) + \frac{k}{m}x(t)= g + \frac{k}{m}l_0\]</p>
+<p>We now have a second order inhomogeneous differential equation with constant coeffisients and a constant term on the right. Second order inhomogenous differential equations can be solved by using the superposition theorem, where you find a complementary solution \(x_c(t)\) by solving the homogenous equation and adding a particular solution \(x_p(t)\) by using the undetermined coefficient method. That is what we will do in this case. </p>
+<p>\[ x(t) = x_c(t) + x_p(t)\]</p>
+<p>First we find the complementary solution \(x_c(t)\), for the homogenous equation.</p>
+<p>\[ \ddot{x}_c(t) + \frac{k}{m}x_c(t)= 0\]</p>
+<p>We make use of the characteristic equation in order to find the roots of the equation.</p>
+<p>\[ r^2 + \frac{k}{m} = 0\]</p>
+<p>\[ \Rightarrow r^2  = - \frac{k}{m}\]</p>
+<p>\[ \Rightarrow r  = \pm i\sqrt{ \frac{k}{m}}\]</p>
+<p>The solution for a homogenous equation with two complex roots can be written as:</p>
+<p>\[ {x}_c(t) = C_1\cos(\sqrt{ \frac{k}{m}}t) + C_2\sin(\sqrt{ \frac{k}{m}}t)\]</p>
+<p>The second step of solving a second inhomogenous solution is the particular solution \(x_p(t)\) where we will use the method of undetermined coefficients. As the right term in our case is a constant, we can also set our particular solution to a constant.</p>
+<p>\[ {x}_p(t) = A\]</p>
+<p>The last step is to put the two terms together and find the unknown constants by inserting the initial conditions.</p>
+<p>\[ x(t) = x_c(t) + x_p(t)\]</p>
+<p>\[\Rightarrow  {x}(t) = C_1\cos(\sqrt{ \frac{k}{m}}t) + C_2\sin(\sqrt{ \frac{k}{m}}t) + A\]</p>
+<p>First we derrive the velocity and the acceleration.</p>
+<p>\[\dot{x}(t) = -C_1\sqrt{ \frac{k}{m}}\sin(\sqrt{ \frac{k}{m}}t) + C_2\sqrt{ \frac{k}{m}}\cos(\sqrt{ \frac{k}{m}}t)\]</p>
+<p>\[\ddot{x}(t) = -C_1\frac{k}{m}\cos(\sqrt{ \frac{k}{m}}t) - C_2 \frac{k}{m}\sin(\sqrt{ \frac{k}{m}}t)\]</p>
+<p>For \( \ddot{x}(t) + \frac{k}{m}x(t)= g + \frac{k}{m}l_0\):</p>
+<p>\[-C_1\frac{k}{m}\cos(\sqrt{ \frac{k}{m}}t) - C_2 \frac{k}{m}\sin(\sqrt{ \frac{k}{m}}t) +\frac{k}{m}(C_1\cos(\sqrt{ \frac{k}{m}}t) + C_2\sin(\sqrt{ \frac{k}{m}}t) + A) = g + \frac{k}{m}l_0\]</p>
+<p>\[\Rightarrow \frac{k}{m}A =g + \frac{k}{m}l_0\]</p>
+<p>\[\Rightarrow A =g\frac{m}{k} + l_0\]</p>
+<p>For \(x(t=0)=l_0\):</p>
+<p>\[{x}(t=0) = C_1\cos(\sqrt{ \frac{k}{m}}0) +\dot{x}_1\sqrt{ \frac{m}{k}}\sin(\sqrt{ \frac{k}{m}}0) +g\frac{m}{k} + l_0 = l_0\]</p>
+<p>\[\Rightarrow  C_1 +g\frac{m}{k} + l_0 = l_0\]</p>
+<p>\[\Rightarrow  C_1 = l_0 - g\frac{m}{k} - l_0\]</p>
+<p>\[\Rightarrow  C_1 = - g\frac{m}{k} \]</p>
+<p>For \(\dot{x}(t=0)=\dot{x}_1\):</p>
+<p>\[\dot{x}(t=0) = -C_1\sqrt{ \frac{k}{m}}\sin(\sqrt{ \frac{k}{m}}0) + C_2\sqrt{ \frac{k}{m}}\cos(\sqrt{ \frac{k}{m}}0) = \dot{x}_1\]</p>
+<p>\[\Rightarrow  C_2\sqrt{ \frac{k}{m}} =\dot{x}_1\]</p>
+<p>\[\Rightarrow  C_2 =\dot{x}_1\sqrt{ \frac{m}{k}}\]</p>
+<p>We, therefore, end up with a general solution to our differential equation:</p>
+<p> \[ {x}(t) =- g\frac{m}{k}\cos(\sqrt{ \frac{k}{m}}t) +\dot{x}_1\sqrt{ \frac{m}{k}}\sin(\sqrt{ \frac{k}{m}}t) +g\frac{m}{k} + l_0\]</p>
+<p> </p>
+<h2>4. Numerical approach</h2>
+<p>For the numerical approach, we have used Matlab and Simulink to simulate the system. </p>
+<p><img width="1200" style="margin-left:auto;margin-right:auto;" alt="AIV_Complete_system.png" src="../../../files/file/Assignment IV/9558-AIV_Complete_system.png"></p>
+<h5 style="text-align:center;">Figure 2: Image of the complete system simulated in Simulink</h5>
+<p>For freefall:<br>\[\ddot{x}(t) = g\]<br>and for stance:<br>\[ \ddot{x}(t) + \frac{k}{m}x(t)= g + \frac{k}{m}l_0\]</p>
+<p>In order to go between the two phases we inserted a switch that was triggered when in the intersection of the two phases. </p>
+<p style="text-align:center;"><img width="590" height="633" alt="AIV_x_dx_ddx_plot.png" src="../../../files/file/Assignment IV/9563-AIV_x_dx_ddx_plot.png"></p>
+<h5 style="text-align:center;">Figure 3: Plot of the position, velocity and the acceleration of the bouncing mass, calculated numerically with a Runge-Kutta solver, with a fixed step size of \(10^-2\)</h5>
+<p style="text-align:left;"> </p>
+<h2>5. Calculation of energy</h2>
+<p> In the freefall phase, there are two forms of energy: kinetic energy \(e_k(t)\) and potential energy \(e_p(t)\). <br>\[e_k(t) = \frac{1}{2}mx(t)^2\]<br>\[e_p(t) = - mgx(t)\]</p>
+<p>And in the stance phace, a third form of energy, elastic energy \(e_e(t)\) is also present.<br>\[e_e(t) =\frac{1}{2}kx(t)^2\]</p>
+<p>At all times energy is conserved and the sum of the different forms of energy should be constant, unless energy is added by an external source. We can use this property to verify that the model for our system is correct. </p>
+<h5 style="text-align:center;"><img width="607" height="617" style="margin-left:auto;margin-right:auto;" alt="AIV_energy_plot.png" src="../../../files/file/Assignment IV/9560-AIV_energy_plot.png"></h5>
+<h5 style="text-align:center;">Figure 4: Plot of the different forms of energy during the bouncing of the mass</h5>
+<p style="text-align:left;">As we can see from Figure [4] the total amount of energy is conserved when the mass is bouncing but is changing between the different forms of energy.</p>
+<h2>6. Comparison between the analytical and numerical solution</h2>
+<p style="text-align:left;">In order to compare the analytical and the numerical solution, we have chosen to only use the simulation of the stance phase.</p>
+<p style="text-align:center;"><img width="1200" alt="AIV_Spring_system.png" src="../../../files/file/Assignment IV/9559-AIV_Spring_system.png"></p>
+<h5 style="text-align:center;">Figure 5: The Simulink system of only the spring system</h5>
+<p style="text-align:center;"><img width="628" height="570" alt="AIV_error_Euler_plot.png" src="../../../files/file/Assignment IV/9561-AIV_error_Euler_plot.png"></p>
+<h5 style="text-align:center;">Figure 6: Plot of the analytical, numerical solution and absolute error using the Euler method and a fixed step size of \(10^-2\)</h5>
+<p style="text-align:center;"><img width="624" height="568" style="margin-left:auto;margin-right:auto;" alt="AIV_error_RK_plot.png" src="../../../files/file/Assignment IV/9562-AIV_error_RK_plot.png"></p>
+<h5 style="text-align:center;">Figure 7: Plot of the analytical, numerical solution and absolute error using Runge-Kutta method and a fixed step size of \(10^-2\)</h5>
+<p>By changing the step-size and the method for solving the problem numerically, we are able to see the behaviour and weaknesses of the numerical solutions. In Figure [6], we can see the result and error of the Euler method. The reason for this is that the Euler method is adding squares together while integrating and is therefore always adding a little extra when the function is curved. This makes the Euler method sensitive to larger step sizes and you can improve the result and minimize the error by decreasing the step size. The Euler method is also fast as the calculation is of the first order and therefore simpler. On the other hand, in Figure [7], where we use the Runge-Kutta method, it results in a smaller error for the same step size. It must be said that the error is still there and increasing over time but is in the order of \(10^-6\). This method is more complicated and takes more time to calculate the answer for low step sizes. The benefit of this method is however that it gives better results with a larger step size, and will with a larger step size also compute acceptably fast. </p>
+<p>By using the relative tolerance function in Matlab you can decrease the error by having a variable step size depending on the error and then adapt the step size to your function. The absolute tolerance is similar but will strive towards an error equal to zero. In combination with the Euler method, the relative tolerance proved to be a good solution as it decreased the error rate drastically. However, the absolute tolerance did decrease the step size to such an extent that when used with the Runge-Kutta method, the calculation time increased.</p>
+<h2>7. Conclusion</h2>
+<p>We have now approached the problem of the bouncing mass analytically and numerically in order to compare them. As we have seen, the analytical approach is feasible but bare in mind that this is a one-dimensional problem and it quickly gets more difficult with differential equations with higher orders. We also verified that the energy is conserved throughout the simulation and have compared the two solutions depending on the numerical method and step-size.</p>
+<h2>References</h2>
+<p><a title="Introduction to hybrid dynamical systems" href="https://www.ecse.rpi.edu/~agung/course/vanderschaft.pdf">[1]</a> P.E <span style="font-family:sans-serif;">Caines, An introduction to hybrid dynamical systems, <em>Automatica, </em> <em>Elsevier BV,</em> 2002<em>, 38</em>, 566-567</span></p>
+<p> </p>
+<p> </p>
+<div class="page" title="Page 1"> </div>
+
+        </div>
+
+                <div class="has-attachment panel panel-default collapsible" id="blockpostfiles-9537">
+            <h5 class="panel-heading">
+                <a class="text-left collapsed" data-toggle="collapse" href="#post-attach-9537" aria-expanded="false">
+                    <span class="icon icon-paperclip left" role="presentation" aria-hidden="true"></span>
+                    <span class="text-small"> Attached files </span>
+                     <span class="metadata">
+                        (1)
+                    </span>
+                    <span class="icon icon-chevron-down collapse-indicator pull-right" role="presentation" aria-hidden="true"></span>
+                </a>
+            </h5>
+            <div class="collapse" id="post-attach-9537">
+                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment IV/AIV_MatLabCode_REIERSEN.m&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download AIV_MatLabCode_REIERSEN.m
+                            </span>
+                        </a>
+                                                <span class="icon icon-file icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9596&view=" class="inner-link">
+                                AIV_MatLabCode_REIERSEN.m
+                                <span class="metadata"> -
+                                    [2.9KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9247&view=">Assignment 0 - Expectations</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 13 April 2018,  3:30 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            <p>I expect from this course to get a deeper understanding of the situation of where we are today, in terms of limitations, new research and opportunities in the field of biorobotics. Coming from a family background of biologists, I want to learn not only theoretically how to transfer knowledge and concepts from biology to robotics but also in practice. After the introduction from the teacher, I also expect to learn and practice how to present the assignments in a structured and academic manner, that I can take with me in my professional life.</p>
+<p>I am expecting this course to take time and a lot of work to deliver a high standard for the assignments, but I look forward to putting in the effort. My expectations for the teacher is to be prepared for the classes, facilitate our learning process by trying to answer our questions and creating an interactive learning environment. I also expect him to give constructive feedback and give us food for thought to inspire us. </p>
+        </div>
+
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9210&view=">Assignment II - The Falling Mass Problem </a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 12 April 2018,  1:44 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            
+<h2 class="p1">Problem specification</h2>
+<p>The following is the problem statement presented in the assignment:</p>
+<p class="p1"><em>"Describe the trajectory of a falling ball (mass 1kg) dropped from a skyscraper and calculate the </em><em>displacement it moved when it reaches a velocity of -10m/s. Assume the acceleration due to gravity </em><em>to be -9.81m/s² and neglect drag (resistance of air)."</em></p>
+<p class="p1">In other words, we want to find out the distance the ball has fallen from the top of the skyscraper and until it reaches a speed of -10m/s. Since the ball is dropped we can assume that the ball has an initial velocity of 0 m/s and a positive direction upwards.  </p>
+<p class="p1"> </p>
+<h2 class="p1">Definitions</h2>
+<table style="height:152px;width:353px;"><tbody><tr style="height:31.5px;"><td style="width:228px;height:31.5px;">Initial velocity [m/s]</td>
+<td style="width:123px;height:31.5px;text-align:left;">\(v_0 = 0m/s \)</td>
+</tr><tr style="height:30px;"><td style="width:228px;height:30px;">Target velocity [m/s]</td>
+<td style="width:123px;height:30px;text-align:left;">\(v_t = -10m/s \)</td>
+</tr><tr style="height:30px;"><td style="width:228px;height:30px;">Gravitational acceleration [m/s<sup>2</sup>]</td>
+<td style="width:123px;height:30px;text-align:left;">\( g = - 9,81m/s^2\) </td>
+</tr></tbody></table><p> </p>
+<p class="p1">By neglecting the resistance of air, as a drop in a vacuum, we can make two assumptions. First, the motion is constrained to a straight line and second that the only force applied is the force of gravity with a constant acceleration \(g\). With these two assumptions valid, we can use the linear motion equations. </p>
+<p class="p1">The first equation is the velocity-time relation:</p>
+<p class="p1" style="text-align:center;">(1) \(v=v_0 + gt\) </p>
+<p class="p1">If we move the variables of eq (1) around, we get an expression for \(t\).</p>
+<p class="p1" style="text-align:center;">(2) \( t = \frac{v - v_0}{g} \)</p>
+<p class="p1" style="text-align:center;"> </p>
+<p class="p1">By integrating the eq (1) we get Newton's second equation for the position-time relation, where \( x_0\) is the initial position of the ball. </p>
+<p class="p1" style="text-align:center;">(3) \( x = x_0 + v_0t + gt^2\) </p>
+<p>As we in this assignment are only interested in the displacement \(dx\) of he ball, we develop eq (3) further.</p>
+<p style="text-align:center;">(4) \( dx = x - x_0 = v_0t + \frac{1}{2}gt^2 \)<br> </p>
+<h2 class="p1">Results </h2>
+<p class="p1" style="text-align:left;">We can use eq (2) to calculate the time \(t_t\), when the ball reaches the target velocity \(v_t\), by inserting our values for target velocity and gravitational acceleration.</p>
+<p class="p1" style="text-align:center;">\( t_t = \frac{v_t - v_0}{g} \)</p>
+<p class="p1" style="text-align:center;">\( \Rightarrow t_t = \frac{-10m/s - 0m/s}{-9,81m/s^2} \)</p>
+<p class="p1" style="text-align:center;">\( \Leftrightarrow t_t \approx 1,02s \)</p>
+<p class="p1" style="text-align:center;"> </p>
+<p class="p1" style="text-align:center;"><img width="761" alt="AII_Velocity.png" src="../../../files/file/Assignment II/9430-AII_Velocity.png"></p>
+<h6 class="p1" style="text-align:center;">Figure 1: Graph of the velocity of the falling ball</h6>
+<p class="p1" style="text-align:center;"> </p>
+<p>After inserting the values for our variables in eq (4), we get the final displacement \(dx_t\) at the target velocity \(v_t\).  </p>
+<p style="text-align:center;"> \(dx_t = v_0t_t + \frac{1}{2}gt_t^2 \)</p>
+<p style="text-align:center;">\(\Rightarrow dx_t = 0m/s*1.19s + \frac{1}{2}*(-9,81m/s^2)*(1,19s)^2\)</p>
+<p style="text-align:center;">\( \Leftrightarrow dx_t \approx -5,1m \)</p>
+<p style="text-align:center;"> </p>
+<p style="text-align:center;"><img width="762" alt="AII_Displacement.png" src="../../../files/file/Assignment II/9431-AII_Displacement.png"></p>
+<h6 style="text-align:center;">Figure 2: Graph of the displacement of the falling ball</h6>
+<p style="text-align:center;"> </p>
+<h2 class="p1">Evaluation </h2>
+<p>As we can see from the calculations and the figures, the ball has travelled a distance of 5,10m towards the ground, at the time when the velocity reaches -10m/s<sup>2</sup>. Since we could neglect the air resistance (and any side winds), we can apply the linear motion equations for this one-dimensional movement and therefore simplify the calculations and neglect the mass. It is important to note that if the hight of the skyscraper, which means the initial position \( x_0\), is less than 5,10m the ball will hit the ground before it reaches the target velocity.</p>
+<p>In case we included the air resistance, we would have had to apply Newton's second law of motion and calculated with the force of gravity and the increasing force of air resistance. The ball would then have taken a longer time in order to reach the target velocity, as the acceleration would decrease during the fall. The distance at the time when the ball reaches the target velocity would then also depend on the mass and as well as the air resistance.  </p>
+<div> </div>
+<div class="page" title="Page 2">
+<div class="layoutArea">
+<div class="column"> </div>
+</div>
+</div>
+<p> </p>
+
+        </div>
+
+                <div class="has-attachment panel panel-default collapsible" id="blockpostfiles-9210">
+            <h5 class="panel-heading">
+                <a class="text-left collapsed" data-toggle="collapse" href="#post-attach-9210" aria-expanded="false">
+                    <span class="icon icon-paperclip left" role="presentation" aria-hidden="true"></span>
+                    <span class="text-small"> Attached files </span>
+                     <span class="metadata">
+                        (1)
+                    </span>
+                    <span class="icon icon-chevron-down collapse-indicator pull-right" role="presentation" aria-hidden="true"></span>
+                </a>
+            </h5>
+            <div class="collapse" id="post-attach-9210">
+                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item">
+                        <a href="../../../files/file/Assignment II/AII_MatLabCode_REIERSEN.m&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download AII_MatLabCode_REIERSEN.m
+                            </span>
+                        </a>
+                                                <span class="icon icon-file icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9435&view=" class="inner-link">
+                                AII_MatLabCode_REIERSEN.m
+                                <span class="metadata"> -
+                                    [1.5KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=9152&view=">Assignment I - Essay on Biorobotics </a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Gyri Reiersen on 12 April 2018, 10:23 AM
+            </div>
+                        <div class="tags metadata">
+                <span class="icon icon-tags left" role="presentation" aria-hidden="true"></span>
+                <strong>Tags:</strong>
+                biorobotics
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            <h3>Biorobotics - definitions and approaches</h3>
+<p>Although the term biorobotics is widely used in titles for university and research institutions and laboratories, it lacks a universal standard definition. As the word suggests it describes the interdisciplinary field of biology, mechanical- and electrical engineering and computer science<a href="#_ftn1" name="user__ftnref1">[1]</a> and therefore covers the fields of cybernetics, bionics and even genetic engineering<a href="#_ftn2" name="user__ftnref2">[2]</a>. However, although the term biorobotics is increasingly popular, there are different interpretations and to what it means. In this essay, we will take a look at some of the definitions and approaches in biorobotics.</p>
+<p>A common interpretation of biorobotics is similar to bionics; to analyze, emulate and simulate properties or features from biology and apply this knowledge to mechatronics, but more specifically for robotics. Some would argue that this is also defined as biologically inspired (also known as bio-inspired) robotics<a href="#_ftn3" name="user__ftnref3">[3]</a>  or bioengineering and that the design of autonomous robots can strongly benefit from this approach. Self-assembly and healing, using free energy like CO<sub>2</sub> or solar, and sensing and responding to the environment are all features from nature that can be implemented into robotics. Until now, research has typically revolved around investigating some of the general features of the of living organisms: adaptability, strength without loss of flexibility and durability, self-repair and self-organization. These elements will be essential to overcome the hurdles of getting autonomous robots out of the sterile lab and join us humans in the real world.</p>
+<p>One fundamental problem that the robots must solve if they are to be autonomous, is essentially figuring out how to get from point A to point B. The professor Auke Jan Ijspeert at EPFL defines that biorobotics is to <em>“[...]take inspiration from biological principles to design robots that match the agility of animals, and to use robots as scientific tools to investigate animal adaptive behavior.”</em><a href="#_ftn4" name="user__ftnref4">[4]</a> University research groups at EPFL<a href="#_ftn5" name="user__ftnref5">[5]</a> and MIT are developing robots that mimic animalistic movement. Traditional robots are limited by natural terrain, but there are already several quite astonishing examples of dynamic locomotion that outperform today’s equipment and vehicles. The most known robot might be the MIT Cheetah<a href="#_ftn6" name="user__ftnref6">[6]</a> that has challenged former limits of autonomous movements like jumping, running, walking and turning.</p>
+<p>Although we humans were built to walk the earth, we still dream about flying. We have come a long way from Leonardo Da Vinci’s flying machines but has yet to understand and emulate the functionalities and collective systems of birds. Raffaello D’Andrea<a href="#_ftn7" name="user__ftnref7">[7]</a>, a professor at the Swiss Federal Institute of Technology (ETH Zürich), explores the capabilities of autonomous systems in the air and argues that: “We wanted to fly like birds. Well, why aren’t we doing that?” Both his research on quadcopters<a href="#_ftn8" name="user__ftnref8">[8]</a> and robots playing football and ping-pong has pushed the borders on what autonomous systems are able to do. </p>
+<p>By developing better ways of mobility, new biorobots will be able to explore harsh environments from the deepest oceans to the surfaces of other planets. In addition to reaching sites that are inaccessible and hazardous for living organisms, they might also collect data or interact with the environment. Robin Murphy<a href="#_ftn9" name="user__ftnref9">[9]</a> at the Texas A&amp;M University researches the use of bio-inspired robots in rescue work after disasters to collect information efficiently, and thereby make the critical decisions faster. However<a href="#_ftn10" name="user__ftnref10">[10]</a>, the robots of today are still not as adaptable to changing environments as organic creatures and is a main focus for research in the field of biorobotics. Some researchers, therefore, try to change the structure and materials of robots from being rigid to soft, like a caterpillar<a href="#_ftn11" name="user__ftnref11">[11]</a>.</p>
+<p>One of the biggest influencers in biological inspiration is Robert Full<a href="#_ftn12" name="user__ftnref12">[12]</a> at Berkley, who worked on mimicking geckos<a href="#_ftn13" name="user__ftnref13">[13]</a> climbing abilities. He obtained a fundamental understanding of how their feet can stick to almost any surface without being covered with dirt. Nature is extremely complex on all levels, from ecosystems to individuals and down to the molecular level. Some researchers have developed multi-robots with implemented AI algorithms to act like a school of fish<a href="#_ftn14" name="user__ftnref14">[14]</a> or cooperate<a href="#_ftn15" name="user__ftnref15">[15]</a> like birds in a formation with a collective intelligence.  </p>
+<p>We also see research in micro-robotics<a href="#_ftn16" name="user__ftnref16">[16]</a> at the size of a grain of rice<a href="#_ftn17" name="user__ftnref17">[17]</a> that can move around and self-assemble like ants, and hence, having little worth as an individual but being valuable when working together with other individuals. Inter-communication, connectivity and ecosystems of different robots will be very important in the future of developing M2M, IoT and connecting our robots with each other.</p>
+<p>Biomimicry is the idea of emulating nature’s designs and processes, a rather wide term that can be used in many fields, everything from architecture to material science. Janine Benyus<a href="#_ftn18" name="user__ftnref18">[18]</a> – the author of “Biomimicry: Innovation Inspired by Nature” which helped popularize the term – is now describing a paradigm change in engineering towards a healthier and more sustainable planet by letting us be inspired by nature. “Learning about the natural world is one thing; learning from the natural world -- that's the switch”, she says.</p>
+<p>According to VDI 6222<a href="#_ftn19" name="user__ftnref19">[19]</a>; <em>“</em><em>A biomimetic robot in terms of this standard is therefore a motion system in which a significant portion of its functions and/or design features (structure) and/or material implementation (materials used) are based on the technical implementation of biological principles.”. </em>The author later argues that biomimetic robots distinguish itself from nature-like or nature-identical robots (biomimicry) that try to imitate nature in movement or material. Whether biorobotics is a common term for biomimetic robots and biomimicry is not specified.</p>
+<p>Critics of biomimicry state that mimicking nature can lead to solutions that do not perform as we would like because their functionalities and design have been optimized for one type of environment. However, supporters argue that the more we learn about nature, the more we can combine its solutions to create what that we need. Nature has spent millions of years to develop and optimize special solutions for different environments, and by using that knowledge in robotics we already have a beta version.  </p>
+<p>We cannot always copy ideas from nature simply because it is currently either infeasible (a single neuron is too complicated to be synthesized artificially in every detail) or is not relevant (animals must satisfy multiple constraints that do not apply to robots, such as protection from parasites), or the technological solution is superior to the one found in nature (for example, the biological equivalent of the wheel has yet to be discovered). Rather, the goal of biorobotics is to work out principles of biological systems and transfer those to robot design<a href="#_ftn20" name="user__ftnref20">[20]</a>. </p>
+<p>In the domain of biology and medicine, the term biorobotics is rather used for applications of robotics, such as control, sensors and analytics. Examples are the fuzzy-based control system for detection of Parkinson disease<a href="#_ftn21" name="user__ftnref21">[21]</a> and the sensor glove and knee instrument used for analytics in rehabilitation and preventative training of elders<a href="#_ftn22" name="user__ftnref22">[22]</a>. Some researchers include the development of features used for robotics such as bio-inspired force and motion sensors<a href="#_ftn23" name="user__ftnref23">[23]</a> in the term of biorobotics while others exclude it<a href="#_ftn23">[24]</a>.</p>
+<p>Many research and university institutions and laboratories use the term biorobotics, maybe because of its loose but intuitive definition of something in the intersection of robotics and biology. In the last years, the field of robotics has largely increased and biorobotics has been a fundamental part of the research and development. Some state that the term biorobotics is limited to robots with clear features applied from biological principles, while others define it as applications of robotics in biology. Although there are different opinions to how to define biorobotics there is a general opinion that robotics will benefit from looking to nature and biology to find solutions. As a final remark, this Robert Full quote<a href="#_ftn24" name="user__ftnref24">[25]</a> is quite suitable: “Engineering can be inspired by biology by using its principles and analogies when they're advantageous, but then integrating that with the best human engineering, ultimately to make something actually better than nature.”</p>
+<p> </p>
+<h3>Sources</h3>
+<p><a href="#_ftnref1" name="user__ftn1">[1]</a> Verein Deutscher Ingenieure (2013) "VDI 6220: Bionik - Bionische Robote"</p>
+<p><a href="#_ftnref2" name="user__ftn2">[2]</a> Wikipedia contributors. (2018) "Biorobotics". <em>Wikipedia, The Free Encyclopedia</em>. Available at: <a class="external free" href="https://en.wikipedia.org/w/index.php?title=Biorobotics&amp;oldid=828222709">https://en.wikipedia.org/w/index.php?title=Biorobotics&amp;oldid=828222709</a> [Accessed 13.04.2018]</p>
+<p><a href="#_ftnref3" name="user__ftn3">[3]</a> Pfeifer R, <em>et al</em>. (2007) "Inspired Robotics Self-Organization, Embodiment, and Biologically", <em>S</em><em>cience</em> (<em>318) </em>p.118 Available at: <a href="https://people.csail.mit.edu/iida/papers/PfeferEtAlScience2007.pdf">https://people.csail.mit.edu/iida/papers/PfeferEtAlScience2007.pdf</a> [Accessed 14.04.2018]</p>
+<p><a href="#_ftnref4" name="user__ftn4">[4]</a> Ijspeert A (2014) "Biorobotics: Using robots to emulate and investigate agile locomotion", <em>Science (10)</em> p.196-203. Available at: <a href="https://infoscience.epfl.ch/record/202118/files/Science-2014-Biorobotics-Ijspeert-Preprint.pdf">https://infoscience.epfl.ch/record/202118/files/Science-2014-Biorobotics-Ijspeert-Preprint.pdf</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref5" name="user__ftn5">[5]</a> Karakasiliotis K <em>et al</em>. (2016) "From cineradiography to biorobots: An approach for designing robots to emulate and study animal locomotion",  <em>Journal of the Royal Society Interface. (13)</em> p.119 Available at: <a href="http://rsif.royalsocietypublishing.org/content/13/119/20151089">http://rsif.royalsocietypublishing.org/content/13/119/20151089</a>  [Accessed 13.04.2018].</p>
+<p><a href="#_ftnref6" name="user__ftn6">[6]</a> Seok, S. et al. (2015) "Design Principles for Energy-Efficient Legged Locomotion and Implementation on the MIT Cheetah Robot", <em>IEEE/ASME Transactions on Mechatronics</em>, (20), p. 1117 – 1129. Available at: <a href="https://biomimetics.mit.edu/design-principles-energy-efficient-legged-locomotion-and-implementation-mit-cheetah-robot">https://biomimetics.mit.edu/design-principles-energy-efficient-legged-locomotion-and-implementation-mit-cheetah-robot</a>  [Accessed 14.04.2018]</p>
+<p><a href="#_ftnref7" name="user__ftn7">[7]</a> raffaello.name, (2017) Dynamic Works. Available at: <a href="http://raffaello.name/dynamic-works/">http://raffaello.name/dynamic-works/</a> [Accessed 14.04.2018]</p>
+<p><a href="#_ftnref8" name="user__ftn8">[8]</a> ted.com/talks (2013) "Raffaello d’Andrea: The astounding athletic power of quadcopters". Available at: <a href="https://www.ted.com/talks/raffaello_d_andrea_the_astounding_athletic_power_of_quadcopters">https://www.ted.com/talks/raffaello_d_andrea_the_astounding_athletic_power_of_quadcopters</a>  [Accessed 14.04.2018]</p>
+<p><a href="#_ftnref9" name="user__ftn9">[9]</a> faculty.cs.tamu.edu.org, (2017) Murphy. Available at: <a href="http://faculty.cs.tamu.edu/murphy/index.html">http://faculty.cs.tamu.edu/murphy/index.html</a> [Accessed 14.04.2018]</p>
+<p><span style="font-size:10pt;"><a href="#_ftnref10" name="user__ftn10">[10]</a> </span>B. G. R. Smith et al., "Biorobotics: Innovative and low cost technologies for next generation planetary rovers," <em>2009 4th International Conference on Recent Advances in Space Technologies</em>, pp. 732-737. Available at: <a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=5158288&amp;isnumber=5158174">http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=5158288&amp;isnumber=5158174</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref11" name="user__ftn11">[11]</a> Trimmer B (2008) “New challenges in biorobotics: Incorporating soft tissue into control systems” <em>Applied Bionics and Biomechanics</em> <em>Vol. 5 No. 3</em> p.119–126 Available at: <a href="https://pdfs.semanticscholar.org/4bed/df7c158792d7de5d41c8e2c7c3ee4029e656.pdf">https://pdfs.semanticscholar.org/4bed/df7c158792d7de5d41c8e2c7c3ee4029e656.pdf</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref12" name="user__ftn12">[12]</a> ted.com/talks (2005) Robert Full: The sticky wonder of Gecko Feet Available at: <a href="https://www.ted.com/talks/robert_full_on_animal_movement">https://www.ted.com/talks/robert_full_on_animal_movement</a>  [Accessed 13.04.2018]<br>Robert Full's page at Berkley: <a href="https://ib.berkeley.edu/people/faculty/fullr">https://ib.berkeley.edu/people/faculty/fullr</a>  [Accessed 13.04.2018]</p>
+<p><a href="#_ftnref13" name="user__ftn13">[13]</a> Gillies, A. G. <em>et al.</em> (2014) Gecko toe and lamellar shear adhesion on macroscopic, engineered rough surfaces. <em>Journal of Experimental Biology</em> Volume (217) p.283-289; Available at: <a href="http://jeb.biologists.org/content/217/2/283">http://jeb.biologists.org/content/217/2/283</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref14" name="user__ftn14">[14]</a> radhikanagpal.org, (2017) Self-Organizing Systems Research Available at: <a href="http://www.radhikanagpal.org/research.html">http://www.radhikanagpal.org/research.html</a> [Accessed 12.04.2018] </p>
+<p><a href="#_ftnref15" name="user__ftn15">[15]</a> ted.com/talks (2012) Vijay Kumar: Robots that fly and cooperate Available at: <a href="https://www.ted.com/talks/vijay_kumar_robots_that_fly_and_cooperate">https://www.ted.com/talks/vijay_kumar_robots_that_fly_and_cooperate</a>  [Accessed 14.04.2018]</p>
+<p><a href="#_ftnref16" name="user__ftn16">[16]</a> Wood, R.J. (2008). "The first biologically inspired at-scale robotic insect" <em>IEEE Trans. on Robotics</em>. Volume (24) p. 341–347.</p>
+<p><a href="#_ftnref17" name="user__ftn17">[17]</a> ted.com/talks (2014), Sarah Bergbreiter: Why I make robots the size of a grain of rice, Available at: <a href="https://www.ted.com/talks/sarah_bergbreiter_why_i_make_robots_the_size_of_a_grain_of_rice">https://www.ted.com/talks/sarah_bergbreiter_why_i_make_robots_the_size_of_a_grain_of_rice</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref18" name="user__ftn18">[18]</a> biomimicry.org, (2017) Janine Benyus. Available at: <a href="https://biomimicry.org/janine-benyus/">https://biomimicry.org/janine-benyus/</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref19" name="user__ftn19">[19]</a> Verein Deutscher Ingenieure (2013) "VDI 6220: Bionik - Bionische Robote"</p>
+<p><a href="#_ftnref20" name="user__ftn20">[20]</a> Pfeifer R et al. (2012) "The Challenges Ahead for Bio-Inspired ‘Soft’ Robotics" <em>Communications of the ACM.</em> (55). p.76. Available at: <a href="https://pdfs.semanticscholar.org/4bed/df7c158792d7de5d41c8e2c7c3ee4029e656.pdf">https://pdfs.semanticscholar.org/4bed/df7c158792d7de5d41c8e2c7c3ee4029e656.pdf</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref21" name="user__ftn21">[21]</a> Rovetta A (2001) "Biorobotics: an instrument for an improved quality of life. An application for the analysis of neuromotor diseases," <em>Proceedings 2001 ICRA. IEEE International Conference on Robotics and Automation </em>pp. 1575-1578  Available at: <a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=932835&amp;isnumber=20183">http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=932835&amp;isnumber=20183</a> [Accessed 15.04.2018]</p>
+<p><a href="#_ftnref22" name="user__ftn22">[22]</a> Dario P (2005) "Biorobotics for longevity," <em>9th International Conference on Rehabilitation Robotics, ICORR 2005.</em>, pp. 269-272. Available at: <a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=1501099&amp;isnumber=32216">http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=1501099&amp;isnumber=32216</a> [Accessed 14.04.2018]</p>
+<p><a href="#_ftnref23" name="user__ftn23">[23]</a> Dario P <em>et al</em>. (2005) "Design, fabrication and applications of biomimetic sensors in biorobotics," <em>2005 </em><em>IEEE International Conference on Information Acquisition</em>, pp. 4. Available at: <a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=1635093&amp;isnumber=34292">http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=1635093&amp;isnumber=34292</a> [Accessed 16.04.2018]</p>
+<p><a href="#_ftn23">[24]</a> Webb B et al. (2001) "Biorobotics", MIT Press p. 7 </p>
+<p><a href="#_ftnref24" name="user__ftn24">[25]</a> ted.com/talks (2005), "Robert Full: Learning from the Gecko’s tail", Available at: <a href="https://www.ted.com/talks/robert_full_learning_from_the_gecko_s_tail">https://www.ted.com/talks/robert_full_learning_from_the_gecko_s_tail</a> [Accessed 15.04.2018]</p>
+        </div>
+
+        
+
+        
+    </div>
+
+
+        </div>
+                <div id="blogpost_page_container" class="hidden"><div id="blogpost_pagination" class="pagination-wrapper center"><div class="lead text-small results pull-right">9 entries</div><ul class="pagination pagination-xs"></div></div>
+        
+        
+    
+        
+    
+</div>
+
+
+        </div>
+        <div id="footer">
+            <p>Export generated for Gyri Reiersen on 11 July 2018, 10:35 AM, from their portfolio at <a href="https://mahara-tum.srv.lrz.de/">TUM-Mahara</a></p>
+        </div>
+    </body>
+</html>
+

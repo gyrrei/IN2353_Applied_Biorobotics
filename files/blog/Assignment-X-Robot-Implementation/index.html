@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <title>Gyri Reiersen - Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/export/style/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/export/style/print.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/views.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/tinymce.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/style-blessed1.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/select2.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/raw/static/style/cookieconsent.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/mahara-tum/static/style/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../static/theme/mahara-tum/static/style/style-blessed1.css">
+
+    </head>
+    <body>
+        <div id="mahara-logo">
+            <a href="https://mahara.org/"><img src="../../../static/theme/mahara-tum/static/images/site-logo.png" alt="Mahara export"></a>
+        </div>
+        <h1><a href="../../../index.html">Assignment X: Robot Implementation</a></h1>
+        <div id="content">
+            <div id="breadcrumbs" class="breadcrumbs">
+                <ul>
+                    <li>You are here: <a href="../../../index.html">Home</a></li>
+                    <li>&raquo; journals</li>
+                    <li>&raquo; <a href="index.html">Assignment X: Robot Implementation</a></li>
+
+                </ul>
+            </div>
+            <div id="breadcrumbs-footer"></div>
+
+
+<div class="blog">
+    
+    
+
+    <div id="blogdescription" class="content-text">
+    
+    </div>
+
+            <div id="postlist" class="fullwidth list-group">
+              <div class="post list-group-item clearfix flush">
+        <div class="post-heading">
+            <h4 class="title">
+                <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10397&view=">Yoga-Based Calibration of the Angle Sensors</a>
+            </h4>
+            <div class="postdetails metadata">
+                <span class="icon icon-calendar left" role="presentation" aria-hidden="true"></span>
+                Posted by Arne Sachtler on 05 July 2018,  1:15 PM
+            </div>
+            
+        </div>
+
+        <div class="content-text">
+            
+<h1 style="text-align:left;">1. Introduction</h1>
+<p style="text-align:left;">In order to make the JenaFox robot walk, it is essential to calibrate the angle sensors. These measure the flexion and extension of the hip and the knees of the robot. Parts of the robot can be damaged and might need replacement. Therefore, it is necessary to develop a strategy to calibrate the conversion of the voltages acquired from the potentiometers to the angles used as input for the neural controller. Additionally, the position sensors might simply drift away from the proper calibration. Consequently, an easy-to-use recalibration procedure is developed.</p>
+<p style="text-align:left;">The goal of this calibration strategy is to enable a user to calibrate the robot with as few tools as possible.</p>
+<h1 style="text-align:left;">2. Calibration Made Easy</h1>
+<p style="text-align:left;">One requirement of the calibration is, that is should be really easy to execute it. As mentioned in the introduction, the position sensors might drift and recalibration is required frequently. In our approach, we use two robot configurations that are easy to reproduce. As the latter reminds one a bit of a yoga course, we call our approach a yoga-based calibration. The configurations required for the calibration only use the extreme angles of each joint and consequently, no angle measurement device is required during recalibration. The operator performing the (re-)calibration, moves the robot to the required poses and gives feedback to the system by pressing one of the ground contact sensors as soon as the required pose is reached. As the designed robot configurations only expose one of the two sensors to the operator, we can directly detect which configuration was set by the pressed ground contact switch. </p>
+<h1 style="text-align:center;"><img width="386" height="213" alt="IMG_20180705_134056.jpg" src="../../../files/extra/10398-IMG_20180705_134056.jpg"></h1>
+<h5 style="text-align:center;">Figure 1: Yoga position of the Fox robot.</h5>
+<p style="text-align:left;">Figure 1 shows one of the two yoga poses of the robot. In this configuration, one knee is completely flexed while the other knee is completely extended. Additionally, both hips need to be as far from each other as possible. This configuration is achieved by pushing the hips to the limits of the joints.</p>
+<p style="text-align:left;">The calibration consists of two steps:<br><strong>1.</strong> Position the JenaFox robot in a yoga-position with one foot in front and the other in the back. The hips need to be as far from each other as possible and the forward knee needs to be flexed completely. In order to calibrate for this hip and knee position, one simply has to press the ground contact switch of the flexed knee. </p>
+<p style="text-align:center;"><img width="386" height="290" style="margin-left:auto;margin-right:auto;" alt="Right_foot_press.jpg" src="../../../files/extra/10428-Right_foot_press.jpg"></p>
+<h5 style="text-align:center;">Figure 2: Yoga pose of the JenaFox robot with the left knee extended, and right knee flexed (where the trigger is pushed).</h5>
+<p style="text-align:left;"><strong>2.</strong> In the second step, one simply repeats the first step but with opposite sides. This means that you change legs: the one that was in front goes in the back and the one in the back goes in the front. The knee in front should be extended and the knee in the back should be flexed. Then again press the ground contact sensor from the flexed knee. </p>
+<p style="text-align:center;"><img width="386" height="290" style="margin-left:auto;margin-right:auto;" alt="Left_foot_press.jpg" src="../../../files/extra/10429-Left_foot_press.jpg"></p>
+<h5 style="text-align:center;">Figure 3: Yoga pose of the JenaFox robot, right knee extended, left knee flexed (where the trigger is pushed)</h5>
+<p style="text-align:center;"> </p>
+<p style="text-align:left;">Figure 2 and 3 shows how the two sides are measured. It is arbitrary which side is measured first and which is measured second as we detect the order by ground contact sensors pressed. Once both steps are conducted, the voltages will be calibrated to the angles of the hips and knees in Matlab.</p>
+<p style="text-align:left;"> </p>
+<h1 style="text-align:left;">3. Realization of our Calibration Approach</h1>
+<p style="text-align:left;">We chose the yoga position as it comes with a lot of properties that are required for the calibration process. Firstly, this pose as seen in Figure 1, is very easy to replicate and it includes the extreme angles for both hips and knees.<br>In order to calibrate the angles to the voltages, at least two pairs of angles-voltages for each leg are required. The voltages of the extreme angles and the appropriate angles.</p>
+<h2 style="text-align:left;">
+<br>3.1 Obtaining the Extreme Angles of the Joints Optically</h2>
+<p style="text-align:left;">In order to measure the angles, we used images of the robot configurations for an optical angle measuring. We additionally added a chessboard to the scene to rectify the images accordingly.</p>
+<p style="text-align:center;"><img width="330" height="248" alt="right_front.png" src="../../../files/extra/10435-right_front.png"><img width="331" height="249" alt="left_front.png" src="../../../files/extra/10434-left_front.png"></p>
+<h5 style="text-align:center;">Figure 4: (left) Angles measured on the photo of the robot (left knee extended)</h5>
+<h5 style="text-align:center;">                    (right) Angles measured on the photo of the robot (right knee extended)</h5>
+<p>Figure 4 shows the measured angles on the image of the JenaFox robot in the yoga pose for both sides. All angles are absolute, that is, relative to the x-axis of the image. Note that the optical approach only provides good results for the angles if the camera sensor plane and the robot's xy-plane are parallel, else the angles get distorted due to the projective transformation. As this is hard to guarantee in general, we decided to use a chessboard pattern to rectify the images as a post-processing step. Then, only the chessboard must be parallel to the robot's xy-plane, which is easier to align in the real world. Under the assumption that this is the case, we rectify the image such that the squares of the chessboard appear as squares in the image and at the same time we remove the angle distortion of the joint angles in the image. Figure 5 shows the rectification of an exemplary image. We use a small python script and the OpenCV library for the rectification. As OpenCV already provides an easy-to-use chessboard detector (as this widely and intensively used for camera calibration) the implementation is straightforward. We detect the corners of some of the squares and warp the image in a way that the quadrilaterals appears as actual axis-aligned squares in the resulting image. This is performed by computing the homography from the detected corners to the desired corners. For details, please view the self-explaining python script in our code repository.</p>
+<table><tbody><tr><td><img width="1200" alt="right_front.jpeg" src="../../../files/extra/10449-right_front.jpeg"></td>
+<td><img width="1200" alt="right_front_rectified.png" src="../../../files/extra/10450-right_front_rectified.png"></td>
+</tr><tr><td>
+<h5>Figure 5: Original and rectified image of one yoga-pose.</h5>
+</td>
+<td>
+<h5>(detected chessboard corners are marked with a red dot)</h5>
+</td>
+</tr></tbody></table><p>Using these measured angles, one can calculate the extreme angles of the knees and hips.</p>
+<table style="height:40px;border-color:#000000;border-width:5px;width:734px;margin-left:auto;margin-right:auto;" width="734"><tbody><tr style="height:22px;"><td style="height:22px;width:271.283px;border-width:5px;border-color:#000000;"> </td>
+<td style="height:22px;text-align:right;width:112.9px;border-width:5px;border-color:#000000;">Right hip</td>
+<td style="height:22px;text-align:right;width:100.167px;border-width:5px;border-color:#000000;">Left Hip</td>
+<td style="height:22px;text-align:right;width:131.1px;border-width:5px;border-color:#000000;">Right knee</td>
+<td style="height:22px;text-align:right;width:116.55px;border-width:5px;border-color:#000000;">Left knee</td>
+</tr><tr style="height:22.6667px;"><td style="height:22.6667px;width:271.283px;border-width:5px;border-color:#000000;">Flexor extreme angle</td>
+<td style="text-align:right;height:22.6667px;width:112.9px;border-width:5px;border-color:#000000;">-64.50</td>
+<td style="text-align:right;height:22.6667px;width:100.167px;border-width:5px;border-color:#000000;">-71.55</td>
+<td style="text-align:right;height:22.6667px;width:131.1px;border-width:5px;border-color:#000000;">-127.20</td>
+<td style="text-align:right;height:22.6667px;width:116.55px;border-width:5px;border-color:#000000;">-128.28</td>
+</tr><tr style="height:22px;"><td style="height:22px;width:271.283px;border-width:5px;border-color:#000000;">Extensor extreme angle</td>
+<td style="height:22px;text-align:right;width:112.9px;border-width:5px;border-color:#000000;">44.15</td>
+<td style="height:22px;text-align:right;width:100.167px;border-width:5px;border-color:#000000;">42.25</td>
+<td style="height:22px;text-align:right;width:131.1px;border-width:5px;border-color:#000000;">-0.2</td>
+<td style="height:22px;text-align:right;width:116.55px;border-width:5px;border-color:#000000;">-2.5</td>
+</tr></tbody></table><h5 style="text-align:center;">Table 1: Extreme angles for hips and knees</h5>
+<p>Table 1 shows the derived extreme angles that are used to calibrate the voltage-angles conversion.</p>
+<h2>3.2 Fitting a Linear Function to the Measurements using Linear Interpolation</h2>
+<p>Knowing that the relation between angles and voltages is proportional, we can fit each angle $f_i(V) = \varphi_i$ with the appropriate voltages $V_i$ by calculating a simple linear function. From this function, it is possible to derive the gain \(m_i\) and the offset  \(\varphi_{0i}\) for the relation for each joint.</p>
+<p>$f_i(V) = m_i V+\varphi_{0i}$</p>
+<p>First of all, the gain of the function is calculated using the following equation:</p>
+<p>$m_i = \frac{\varphi_{1i}-\varphi_{2i}}{V_{1i}-V_{2i}} $</p>
+<p>Then later the offset \(\varphi_{i0}\) is found by :</p>
+<p>$\varphi_{0i} = \varphi_1 - m_i*V_1$</p>
+<p>This procedure is done for all of the four joints as seen in Figure 6.</p>
+<p> </p>
+<p><img width="627" height="287" style="margin-left:auto;margin-right:auto;" alt="voltage_angle2.png" src="../../../files/extra/10442-voltage_angle2.png"></p>
+<h5 style="text-align:center;">Figure 6: Voltage-Angle relation graphs for each motor joint</h5>
+<p>As the calibration of the voltage-to-angels now is done, the angles can be used as input for the neural controller of the JenaFox robot. </p>
+<h1>4. Integration</h1>
+<p>During the calibration, we have a trivial simulink model that simply stores all the input data to the workspace. This includes the voltages for the angle sensors and the ground contact voltages. This data can then be stored to a '.mat' file to reuse it later. We added another script that takes the recorded data from the workspace, extracts the required training data based on the state of the ground contacts switches and computes the gains and offsets for the linear interpolation. The calibration script is automatically called in the init script of the model. Afterwards, the variable <em>calibration_data </em>is available which can be used in simulink for the conversion from voltages to angles.</p>
+<h5 style="text-align:center;"><img width="611" style="margin-left:auto;margin-right:auto;" alt="forrest_simulink.jpeg" src="../../../files/extra/10447-forrest_simulink.jpeg"></h5>
+<h5 style="text-align:center;">Figure 7: The block in Simulink for conversion of the voltages to angles</h5>
+<p>After having calibrated the relation between the voltages and angles, a MatLab function called "forrest" is introduced to do the conversion in real-time for the controller. Figure 7 shows the basic interface of this conversion block. The input are the potentiometer voltages and the <em>calibration_data</em> from the workspace which is computed in the model's init script. Based thereon, the block performs the linear interpolation for the angles and normalizes the ground contact signals to [0, 1].</p>
+<h5 style="text-align:center;"><img width="661" style="margin-left:auto;margin-right:auto;" alt="forrest_gump_simulink.jpeg" src="../../../files/extra/10446-forrest_gump_simulink.jpeg"></h5>
+<h5 style="text-align:center;">Figure 8: The two blocks "forrest" and "gump" used for controlling the JenaFox robot</h5>
+<p style="text-align:left;">The "forrest" block outputs the angles and the ground contact vector which are sent to the neural controller block "gump". The voltages that determine the motors are later outputted from this block. Figure 8 shows the interconnection of the voltage to angle conversion and the controller block. </p>
+<h1>5. Discussion (Outtakes of the Calibration Design)</h1>
+<p>To find the optimal calibration strategy, we followed a design thinking approach.  This approach required several iterations and we came up with some funny approaches on how we could calibrate the JenaFox robot.<br>For our first approach, we used the angle measurement tool that was provided by the professor. This approach turned out to be quite challenging, as the measurement was more a measure by eyesight. It was particularly difficult to align the angle measurement tool with according parts of the robot.  The idea of using the ground contact sensors for registering angles came early in the process. However, we first thought of clicking one time for each angle with a certain order, making it unintuitive and confusing. <br>Another approach required rectangular cubes, where the robot legs were aligned to the edges of the cubes. This approach was discarded due to lack of accuracy.  We finally decided on the yoga-based approach using a camera for the angle measurement, as it is intuitive, easy to reproduce and the tools required are more or less always available. </p>
+<h1>Code on GitLab</h1>
+<p><a href="https://gitlab.lrz.de/crzy_optimizers/forrest_gump">https://gitlab.lrz.de/crzy_optimizers/forrest_gump</a></p>
+<p> </p>
+
+        </div>
+
+                <div class="has-attachment panel panel-default collapsible" id="blockpostfiles-10397">
+            <h5 class="panel-heading">
+                <a class="text-left collapsed" data-toggle="collapse" href="#post-attach-10397" aria-expanded="false">
+                    <span class="icon icon-paperclip left" role="presentation" aria-hidden="true"></span>
+                    <span class="text-small"> Attached files </span>
+                     <span class="metadata">
+                        (1)
+                    </span>
+                    <span class="icon icon-chevron-down collapse-indicator pull-right" role="presentation" aria-hidden="true"></span>
+                </a>
+            </h5>
+            <div class="collapse" id="post-attach-10397">
+                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item">
+                        <a href="../../../files/extra/10451-forrest_gump-master.zip&amp;view=" class="outer-link icon-on-hover">
+                            <span class="sr-only">
+                                Download forrest_gump-master.zip
+                            </span>
+                        </a>
+                                                <span class="icon icon-archive icon-lg text-default left" role="presentation" aria-hidden="true"></span>
+                        
+                        <span class="title">
+                            <a href="https://mahara-tum.srv.lrz.de/artefact/artefact.php?artefact=10451&view=" class="inner-link">
+                                forrest_gump-master.zip
+                                <span class="metadata"> -
+                                    [569.5KB]
+                                </span>
+                            </a>
+                        </span>
+                        <span class="icon icon-download icon-lg pull-right text-watermark icon-action" role="presentation" aria-hidden="true"></span>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+        
+
+        
+    </div>
+
+
+        </div>
+                <div id="blogpost_page_container" class="hidden"><div id="blogpost_pagination" class="pagination-wrapper center"><div class="lead text-small results pull-right">1 entry</div><ul class="pagination pagination-xs"></div></div>
+        
+        
+    
+        
+    
+</div>
+
+
+        </div>
+        <div id="footer">
+            <p>Export generated for Gyri Reiersen on 11 July 2018, 10:35 AM, from their portfolio at <a href="https://mahara-tum.srv.lrz.de/">TUM-Mahara</a></p>
+        </div>
+    </body>
+</html>
+
