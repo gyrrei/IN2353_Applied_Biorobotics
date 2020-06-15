@@ -1,5 +1,6 @@
 # Applied Biorobotics @TUM IN2353
-Held by Prof. Daniel Renjewski. 
+Held by Prof. Daniel Renjewski. Achieved a grade of 1,3.
+
 8 credits course for ~20 students using flipped classrooms. Weekly assignments incl. neuro-controller of a robot, particle swarm optimisation, poster on bipedal walkers and 15min video about snake robots. All programming exercises were performed in MatLab and python.
 
 ## Assignments
